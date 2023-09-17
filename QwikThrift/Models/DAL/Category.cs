@@ -16,7 +16,7 @@ namespace QwikThrift.Models.DAL
         /// <summary>
         /// Description of category
         /// </summary>
-        public int CategoryDescription { get; set; }
+        public string CategoryDescription { get; set; }
 
         /// <summary>
         /// id of user who created category
