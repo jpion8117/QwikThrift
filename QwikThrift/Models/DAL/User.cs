@@ -60,6 +60,9 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         public UserRoles Role { get; set; }
 
+        public List<Message> MessagesSent { get; set; }
+        public List<Message> MessagesRecieved { get; set; }
+
         /// <summary>
         /// Check if user is a member of a given role
         /// </summary>

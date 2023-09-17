@@ -7,11 +7,9 @@ namespace QwikThrift.Models.DAL
     {
         public int MessageId { get; set; }
 
-        [ForeignKey("UserId")]
         public int SenderId { get; set; }
         public User Sender { get; set; }
 
-        [ForeignKey("UserId")]
         public int RecipientId { get; set; }
         public User Recipient { get; set; }
 
