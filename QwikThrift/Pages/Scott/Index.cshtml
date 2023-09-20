@@ -1,0 +1,45 @@
+﻿@page
+@model QwikThrift.Pages.Scott.IndexModel
+@{
+    ViewData["Title"] = "My Listings";
+}
+<h1>My Listings</h1>
+<div class="row">
+    <div class="col-md-8 data-view">
+        
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label>Image:</label>
+            </div>
+            <div class="form-group">
+                <label>Title:</label>
+            </div>
+            <div class="form-group">
+                <label>Price:</label>
+            </div>
+            <div class="form-group">
+                <label>Category:</label>
+            </div>
+            <div class="form-group">
+                <label>Decription:</label>
+            </div>
+
+        </form>
+
+    </div>
+    <div class="col-md-4 order-1">
+        <button class="btn btn-primary">
+            <a class="text-dark" asp-area="" asp-page="/Scott/Edit">Edit Selected Listing</a>
+        </button>
+        <p></p>
+        <button class="btn btn-primary">
+            <a class="text-dark" asp-area="" asp-page="/Scott/Delete">Delete Selected Listing</a>
+        </button>
+        <p></p>
+        
+        <button class="btn btn-primary">
+            <a class="text-dark" asp-area="" asp-page="/Scott/Create">Create New Listing</a>
+        </button>
+    </div>
+</div>
