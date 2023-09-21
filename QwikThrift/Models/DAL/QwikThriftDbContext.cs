@@ -15,6 +15,21 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         public DbSet<User> Users { get; set; }
 
+        /// <summary>
+        /// Stores all listings on the site
+        /// </summary>
+        public DbSet<Listing> Listings { get; set; }
+
+        /// <summary>
+        /// Stores file location and metadata for images
+        /// </summary>
+        public DbSet<ImageReference> ImageReferences { get; set; }
+
+        /// <summary>
+        /// Categories that for listings
+        /// </summary>
+        public DbSet<Category> Categories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //bind UserId of message sender to message
@@ -28,6 +43,24 @@ namespace QwikThrift.Models.DAL
                 .HasOne(m => m.Recipient)
                 .WithMany(u => u.MessagesRecieved)
                 .HasForeignKey(m => m.RecipientId);
+
+            //bind UserId of listing owner to listing
+            modelBuilder.Entity<Listing>()
+                .HasOne<User>(l => l.Owner)
+                .WithMany(u => u.Listings)
+                .HasForeignKey(l => l.OwnerId);
+
+            //bind ImageReferenceId to listing
+            modelBuilder.Entity<ImageReference>()
+                .HasOne<Listing>(i => i.Listing)
+                .WithMany(u => u.Images)
+                .HasForeignKey(i => i.ListingId);
+
+            //bind categoryId to listings
+            modelBuilder.Entity<Listing>()
+                .HasOne<Category>(l => l.Category)
+                .WithMany(c => c.Listings)
+                .HasForeignKey(l => l.CategoryId);
         }
     }
 }
