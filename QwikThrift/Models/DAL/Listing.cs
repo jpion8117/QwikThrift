@@ -44,6 +44,7 @@ namespace QwikThrift.Models.DAL
         /// CategoryId of the category this listing belongs to.
         /// </summary>
         public int CategoryId {  get; set; }
+        public Category Category { get; set; }
 
         /// <summary>
         /// Timestamp when listing was created
