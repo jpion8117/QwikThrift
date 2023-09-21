@@ -25,6 +25,11 @@ namespace QwikThrift.Models.DAL
         public User Owner { get; set; }
 
         /// <summary>
+        /// All images associated with this listing
+        /// </summary>
+        public List<ImageReference> Images { get; set; }
+
+        /// <summary>
         /// Marked true to signify a listing has sold and should no longer be
         /// listed on the site.
         /// </summary>
