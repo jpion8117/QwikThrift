@@ -16,3 +16,32 @@ html {
 body {
   margin-bottom: 60px;
 }
+/*DATA VIEW CLASSES*/
+.data-view{
+    background-color: #514f4f;
+    color:white;
+    border-radius: 5px;
+    padding:10px 20px;
+}
+/*NAVIGATION CLASSES*/
+.nav-qwik {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #514f4f;
+    border-radius: 0 0 10px 10px;
+    
+}
+ li{
+    color:white;
+}
+.logo {
+    margin-right: auto; /* Push the logo to the left */
+}
+/* Style for the navigation links */
+/* Modify brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: white;
+}
