@@ -23,5 +23,12 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         public int AuthorizedById { get; set; }
 
+        public User AuthorizedBy { get; set; }
+
+        /// <summary>
+        /// listings associated with this category.
+        /// </summary>
+        public List<Listing> Listings { get; set; }
+
     }
 }
