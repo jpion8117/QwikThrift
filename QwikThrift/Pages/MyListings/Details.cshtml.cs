@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace QwikThrift.Pages.Scott
+namespace QwikThrift.Pages.MyListings
 {
-    public class EditModel : PageModel
+    public class DetailsModel : PageModel
     {
         public void OnGet()
         {
