@@ -30,37 +30,43 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         public DbSet<Category> Categories { get; set; }
 
+        public QwikThriftDbContext(DbContextOptions<QwikThriftDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //bind UserId of message sender to message
             modelBuilder.Entity<Message>()
                 .HasOne<User>(m => m.Sender)
                 .WithMany(u => u.MessagesSent)
-                .HasForeignKey(m => m.SenderId);
+                .HasForeignKey(m => m.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //bind UserId of message recipient to message
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Recipient)
                 .WithMany(u => u.MessagesRecieved)
-                .HasForeignKey(m => m.RecipientId);
+                .HasForeignKey(m => m.RecipientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //bind UserId of listing owner to listing
             modelBuilder.Entity<Listing>()
                 .HasOne<User>(l => l.Owner)
                 .WithMany(u => u.Listings)
-                .HasForeignKey(l => l.OwnerId);
+                .HasForeignKey(l => l.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //bind ImageReferenceId to listing
             modelBuilder.Entity<ImageReference>()
                 .HasOne<Listing>(i => i.Listing)
                 .WithMany(u => u.Images)
-                .HasForeignKey(i => i.ListingId);
+                .HasForeignKey(i => i.ListingId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //bind categoryId to listings
             modelBuilder.Entity<Listing>()
                 .HasOne<Category>(l => l.Category)
                 .WithMany(c => c.Listings)
-                .HasForeignKey(l => l.CategoryId);
+                .HasForeignKey(l => l.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
