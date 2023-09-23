@@ -1,17 +1,15 @@
 ﻿@page
-@model QwikThrift.Pages.Scott.EditModel
+@model DetailsModel
 @{
-    ViewData["Title"] = "Edit Listing";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Edit Listing:</h1>
-
-<h4>Listing:</h4>
+<h1>Details:</h1>
 
 <div class="row">
     <div class="col-md-6 data-view">
         <form method="post">
-            @Html.AntiForgeryToken() 
+            @Html.AntiForgeryToken()
 
             <div class="form-group">
                 <label>Image:</label>
@@ -28,16 +26,12 @@
             <div class="form-group">
                 <label>Decription:</label>
             </div>
-            <div style="text-align:center;">
-            <button style="margin-left:auto;margin-right:auto;" type="reset" class="btn btn-primary text-dark">Reset</button>
-            <button type="submit" class="btn btn-primary text-dark">Finish Editing</button>
-            </div>
         </form>
 
     </div>
     <div class="col-md-4 order-1" style="text-align:left;padding:10px;">
         <button class="btn btn-primary">
-            <a class="text-dark" asp-area="" asp-page="/Scott/Index">Back to My Listings</a>
+            <a class="text-dark" asp-area="" asp-page="/MyListings/Index">Back to My Listings</a>
         </button>
     </div>
 </div>
