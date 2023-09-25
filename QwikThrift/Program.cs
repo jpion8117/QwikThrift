@@ -1,9 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using QwikThrift.Models.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSession();
 builder.Services.AddMemoryCache();
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<QwikThriftDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? 
+    throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
 
 var app = builder.Build();
 
