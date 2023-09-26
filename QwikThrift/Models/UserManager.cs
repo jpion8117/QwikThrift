@@ -10,7 +10,7 @@ namespace QwikThrift.Models
         /// <summary>
         /// Used to retrieve the userId from the session.
         /// </summary>
-        public string SessionUserKey
+        private string SessionUserKey
         {
             get => "________SESSION_USER_KEY________";
         }
@@ -64,6 +64,14 @@ namespace QwikThrift.Models
         public void SaveUserSession(User user) 
         {
             _session.SetInt32(SessionUserKey, user.UserId);
+        }
+
+        /// <summary>
+        /// Removes the user session key logging the user out.
+        /// </summary>
+        public void DeleteUserSession() 
+        {
+            _session.Remove(SessionUserKey);
         }
     }
 }

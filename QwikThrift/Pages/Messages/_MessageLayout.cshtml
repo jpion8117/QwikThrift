@@ -1,5 +1,4 @@
-﻿@model IndexModel
-@{
+﻿@{
     Layout = "_Layout";
 }
 <div class="row">
@@ -7,7 +6,7 @@
         <a asp-page="Index" asp-route-mode="inbox" class="list-group-item 
             list-group-item-action d-flex justify-content-between align-it @(ViewBag.Mode == "inbox" ? "active" : "")">
                 Inbox
-                <span class="badge rounded-circle bg-white text-black">@Model.NewMessages</span>
+                <span class="badge rounded-circle bg-white text-black">@ViewBag.UnreadMessages</span>
             </a>
         <a asp-page="Index" asp-route-mode="outbox" class="list-group-item list-group-item-action
             @(ViewBag.Mode == "outbox" ? "active" : "")">Sent</a>

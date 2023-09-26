@@ -30,6 +30,9 @@ namespace QwikThrift.Pages.Messages
             }
             
             var user = userMan.User;
+            ViewData["UnreadMessages"] = _dbContext.Messages
+                .Where(m => m.RecipientId == user.UserId && m.MessageRead == false)
+                .ToList().Count;
 
             switch (mode)
             {
