@@ -1,6 +1,7 @@
 ﻿#nullable disable
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QwikThrift.Models.DAL
 {
@@ -32,6 +33,13 @@ namespace QwikThrift.Models.DAL
         /// Name of image file stored on server
         /// </summary>
         public string Filename { get; set; }
+
+        [NotMapped]
+        public string FullPath 
+        {
+            get => Path + Filename;
+            
+        }
 
         /// <summary>
         /// Listing associated with this image.

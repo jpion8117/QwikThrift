@@ -12,8 +12,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-group m-1">
-                <label class="fw-bolder">Image:</label>
-                <img src="@Model.Item.Images" alt="Item Image" />
+                <img class="col-12" src="@(Model.Item.Images.Count > 0 ? Model.Item.Images[0].FullPath : "")" alt="Listing Image" />
             </div>
             <div class="form-group m-1">
                 <label class="fw-bolder">Price:</label>
