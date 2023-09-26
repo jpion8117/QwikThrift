@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int}"
 @model DetailsModel
 @{
     ViewData["Title"] = "Details";
@@ -11,23 +11,28 @@
         <form method="post">
             @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                <label>Image:</label>
+            <div class="form-group m-1">
+                <label class="fw-bolder">Image:</label>
+                <img src="@Model.Item.Images" alt="Item Image" />
             </div>
-            <div class="form-group">
-                <label>Price:</label>
+            <div class="form-group m-1">
+                <label class="fw-bolder">Price:</label>
+                <span>@Model.Item.Price.ToString("C")</span>
             </div>
-            <div class="form-group">
-                <label>Title:</label>
+            <div class="form-group m-1">
+                <label class="fw-bolder">Title:</label>
+                <span>@Model.Item.Title</span>
             </div>
-            <div class="form-group">
-                <label>Category:</label>
+            <div class="form-group m-1">
+                <label class="fw-bolder">Category:</label>
+                <span>@Model.Item.Category</span>
             </div>
-            <div class="form-group">
-                <label>Decription:</label>
+            <div class="form-group m-1">
+                <label class="fw-bolder">Description:</label>
+                <br />
+                <span>@Model.Item.Description</span>
             </div>
         </form>
-
     </div>
     <div class="col-md-4 order-1" style="text-align:left;padding:10px;">
         <button class="btn btn-primary">
