@@ -67,7 +67,7 @@ namespace QwikThrift.Pages.Users
                 if (ReturnURL.IsNullOrEmpty())
                     return Redirect("/");
 
-                return RedirectPermanent(ReturnURL);
+                return Redirect(ReturnURL);
             }
 
             return Page();
