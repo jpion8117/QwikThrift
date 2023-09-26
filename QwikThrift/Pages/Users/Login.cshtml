@@ -2,18 +2,20 @@
 @model QwikThrift.Pages.Users.LoginModel
 @{
 }
-<h1>A very basic/Ugly login page</h1>
-<h2>TODO: make look not aweful</h2>
-
-<form asp-page="Login" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <label asp-for="Username"></label>
-    <input asp-for="Username" />
-    <br />
-    <label asp-for="Password"></label>
-    <input asp-for="Password" />
-
-    <button type="submit">Login</button>
-
-    <input asp-for="ReturnURL" class="visually-hidden" />
-</form>
+<h1>Login</h1>
+<h3 class="text-white">Enter Username and password below.</h3>
+<div class="data-view ">
+    <form asp-page="Login" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <label asp-for="Username" class="text-white p-3"></label>
+        <input asp-for="Username" class="" />
+        <br />
+        <label asp-for="Password" class="text-white p-3"></label>
+        <input asp-for="Password" class="" />
+        <br />
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary p-3">Login</button>
+        </div>
+        <input asp-for="ReturnURL" class="visually-hidden" />
+    </form>
+</div>
