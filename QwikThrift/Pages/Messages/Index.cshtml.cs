@@ -1,50 +1,52 @@
 #nullable disable
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using QwikThrift.Models;
 using QwikThrift.Models.DAL;
 
 namespace QwikThrift.Pages.Messages
 {
     public class IndexModel : PageModel
     {
-        public List<Message> Inbox { get; set; }
-        public List<Message> Outbox { get; set; }
+        private QwikThriftDbContext _dbContext;
         public List<Message> Messages { get; set; }
         public int NewMessages { get; set; }
         public string SearchKey { get; set; }
 
-        public IndexModel()
+        public IndexModel(QwikThriftDbContext dbContext)
         {
-            Inbox = new List<Message>();
-            Outbox = new List<Message>();
-            Messages = new List<Message>();
-            Messages.Add(new Message());
-            Messages.Add(new Message());
-            Messages.Add(new Message());
-            Messages[0].Subject = "Test Message";
-            Messages[0].Sender = new Models.DAL.User();
-            Messages[0].Sender.Username = "Test Subject A";
-            Messages[0].Body = "This is the body of the first message ever to be displayed here. " +
-                "which is pretty cool! Even if the message is actually fake and never went through" +
-                "the system's database";
-            Messages[1].Subject = "Test Message 2";
-            Messages[1].Sender = new Models.DAL.User();
-            Messages[1].Sender.Username = "Test Subject B";
-            Messages[1].Body = "This is the body of the first message ever to be displayed here. " +
-                "which is pretty cool! Even if the message is actually fake and never went through" +
-                "the system's database";
-            Messages[2].Subject = "RE: Test Message";
-            Messages[2].Sender = new Models.DAL.User();
-            Messages[2].Sender.Username = "Test Subject A";
-            Messages[2].Body = "This is the body of the first message ever to be displayed here. " +
-                "which is pretty cool! Even if the message is actually fake and never went through" +
-                "the system's database";
-            NewMessages = 0;
-            SearchKey = string.Empty;
+            _dbContext = dbContext;
         }
-        public void OnGet(string mode = "inbox")
+        public IActionResult OnGet(string mode = "inbox")
         {
+            var userMan = new UserManager(HttpContext.Session, _dbContext);
             ViewData["Mode"] = mode;
+
+            //redirect user to login page if user is not logged in.
+            if (!userMan.UserLoggedIn)
+            {
+                return RedirectToPagePermanent("/Users/Login", new { returnUrl = Request.GetEncodedUrl() });
+            }
+            
+            var user = userMan.User;
+
+            switch (mode)
+            {
+                case "inbox":
+                    Messages = _dbContext.Messages.Where(m => m.RecipientId == user.UserId).OrderByDescending(m => m.Timestamp).ToList();
+                    break;
+
+                case "outbox":
+                    Messages = _dbContext.Messages.Where(m => m.SenderId == user.UserId).OrderByDescending(m => m.Timestamp).ToList();
+                    break;
+
+                default:
+                    Messages = new List<Message>();
+                    break;
+            }
+
+            return Page();
         }
     }
 }

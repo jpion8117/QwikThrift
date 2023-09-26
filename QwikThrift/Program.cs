@@ -8,9 +8,11 @@ builder.Services.AddSession();
 builder.Services.AddMemoryCache();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<QwikThriftDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? 
-    throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
-
+{
+    options.UseLazyLoadingProxies();
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
+    throw new InvalidOperationException("Connection string 'DefaultConnection' not found."));
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -22,8 +22,7 @@
             </div>
             <br />
             <div class="text-sm-start text-wrap">
-                @message.Body.Substring(0,100)
-                @(message.Body.Length >= 100 ? "..." : "")
+                @(message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
             </div>
             <br />
             <div class="text-sm-end text-muted">

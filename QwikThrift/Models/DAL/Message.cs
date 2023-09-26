@@ -8,10 +8,10 @@ namespace QwikThrift.Models.DAL
         public int MessageId { get; set; }
 
         public int SenderId { get; set; }
-        public User Sender { get; set; }
+        virtual public User Sender { get; set; }
 
         public int RecipientId { get; set; }
-        public User Recipient { get; set; }
+        virtual public User Recipient { get; set; }
 
         public string Subject { get; set; }
         public string Body { get; set; }

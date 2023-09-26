@@ -37,6 +37,6 @@ namespace QwikThrift.Models.DAL
         /// Listing associated with this image.
         /// </summary>
         public int ListingId { get; set; }
-        public Listing Listing { get; set; }
+        virtual public Listing Listing { get; set; }
     }
 }

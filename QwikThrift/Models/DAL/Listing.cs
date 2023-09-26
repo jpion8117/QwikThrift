@@ -22,12 +22,12 @@ namespace QwikThrift.Models.DAL
         /// UserId of the listing owner
         /// </summary>
         public int OwnerId { get; set; }
-        public User Owner { get; set; }
+        virtual public User Owner { get; set; }
 
         /// <summary>
         /// All images associated with this listing
         /// </summary>
-        public List<ImageReference> Images { get; set; }
+        virtual public List<ImageReference> Images { get; set; }
 
         /// <summary>
         /// Marked true to signify a listing has sold and should no longer be
@@ -44,15 +44,13 @@ namespace QwikThrift.Models.DAL
         /// CategoryId of the category this listing belongs to.
         /// </summary>
         public int CategoryId {  get; set; }
-        public Category Category { get; set; }
+        virtual public Category Category { get; set; }
 
         /// <summary>
         /// Timestamp when listing was created
         /// </summary>
         public DateTime ListingTime { get; set; }
-
-        //public List<ImageReference> Images { get; set; } 
-        
+                
         /// <summary>
         /// Remove all image files associated with this listing. This method should 
         /// be called when removing a listing
