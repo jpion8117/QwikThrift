@@ -17,7 +17,7 @@ namespace QwikThrift.Pages.MyListings
         public IActionResult OnGet(int id)
         {
             // Retrieve the item based on the given Id from your data repository
-            Item = _dbContext.Listings.FirstOrDefault(item => item.OwnerId == id);
+            Item = _dbContext.Listings.FirstOrDefault(item => item.ListingId == id);
 
             if (Item == null)
             {
