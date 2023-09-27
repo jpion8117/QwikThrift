@@ -4,17 +4,18 @@
 }
 <h1>Login</h1>
 <h3 class="text-white">Enter Username and password below.</h3>
-<div class="data-view text-center">
+<div class="data-view ">
     <form asp-page="Login" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <label asp-for="Username" class="text-white p-3"></label>
-        <input asp-for="Username" class=""/>
+        <input asp-for="Username" class="" />
         <br />
         <label asp-for="Password" class="text-white p-3"></label>
-        <input asp-for="Password" class=""/>
+        <input asp-for="Password" class="" />
         <br />
+        <div class="text-center">
         <button type="submit" class="btn btn-primary p-3">Login</button>
-
+        </div>
         <input asp-for="ReturnURL" class="visually-hidden" />
     </form>
 </div>

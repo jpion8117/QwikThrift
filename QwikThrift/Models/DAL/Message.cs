@@ -13,6 +13,8 @@ namespace QwikThrift.Models.DAL
         public int RecipientId { get; set; }
         virtual public User Recipient { get; set; }
 
+        public bool MessageRead { get; set; }
+
         public string Subject { get; set; }
         public string Body { get; set; }
         public DateTime Timestamp { get; set; }

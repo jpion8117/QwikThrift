@@ -45,6 +45,17 @@ body {
     padding: 10px 20px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
 }
+.message-unread{
+    background-color:#949494;
+}
+.message-read {
+    background-color: #eaeaea;
+}
+
+.message-read:hover, .message-unread:hover {
+    background-color: #272727;
+    color:white;
+}
 
 /* BUTTONS */
 .btn, .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {

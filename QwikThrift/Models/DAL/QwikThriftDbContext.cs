@@ -273,6 +273,7 @@ namespace QwikThrift.Models.DAL
                     RecipientId = 4,
                     SenderId = 5,
                     Subject = "Victorian Dining Set. Not Haunted",
+                    MessageRead = false,
                     Body = "Hello \"Tyler,\" or should I call you Jeremy! You thought you could get rid of " +
                     "me that easily! FOOOOOOOOL! I am everywhere, I am nowhere, I am your personal living " +
                     "nightmare.",
@@ -284,6 +285,7 @@ namespace QwikThrift.Models.DAL
                     RecipientId = 3,
                     SenderId = 4,
                     Subject = "School Bus Camper",
+                    MessageRead = false,
                     Body = "Hi Scott, I have some questions about the bus you have for sale. Do you know if " +
                     "this magical bus can traverse dimensions? I’m looking to get rid of some… unique furniture " +
                     "and I really need it FAR away. I can’t say much, I think I’m being watched! I’ll give you " +
@@ -297,6 +299,7 @@ namespace QwikThrift.Models.DAL
                     RecipientId = 4,
                     SenderId = 3,
                     Subject = "RE:School Bus Camper",
+                    MessageRead = false,
                     Body = "Tyler, I’m not sure what you mean by that. As I mentioned in my post, I’ve really " +
                     "only driven it once and it didn’t go well. You’re more than welcome to come see for yourself, " +
                     "but I will not be setting foot in that thing again. You can take it for a test drive if you " +
@@ -309,6 +312,7 @@ namespace QwikThrift.Models.DAL
                     MessageId = 4,
                     RecipientId = 2,
                     SenderId = 3,
+                    MessageRead = false,
                     Subject = "Totally Fine Car",
                     Body = "So listen, this “car” is a rusty hunk of metal. I’d give ya 300 bucks if you haul it to me.",
                     Timestamp = DateTime.Parse("August 21, 2023 13:17")
@@ -318,6 +322,7 @@ namespace QwikThrift.Models.DAL
                     MessageId = 5,
                     RecipientId = 3,
                     SenderId = 2,
+                    MessageRead = false,
                     Subject = "RE:Totally Fine Car",
                     Body = "You got to be out your mind! This car is in pristine condition!! How dare you! This is the " +
                     "super-luxury-deluxe model! It even has two rear view mirrors for optimal viewing!",
@@ -328,6 +333,7 @@ namespace QwikThrift.Models.DAL
                     MessageId = 6,
                     RecipientId = 2,
                     SenderId = 3,
+                    MessageRead = false,
                     Subject = "RE:Totally Fine Car",
                     Body = "Why would the passenger need a mirror in the first place?! So they can also see what they’re " +
                     "towing in this rust bucket?! This thing couldn't make it out of the driveway without losing a muffler! " +
@@ -339,6 +345,7 @@ namespace QwikThrift.Models.DAL
                     MessageId = 7,
                     RecipientId = 3,
                     SenderId = 2,
+                    MessageRead = false,
                     Subject = "RE:Totally Fine Car",
                     Body = "Look, the tires are free if you buy the car! You care about tires anyway! You got perfectly good " +
                     "rims to ride on! You darn city folk and your fancy things like tires wouldn’t know a good car if it bit " +
@@ -351,6 +358,7 @@ namespace QwikThrift.Models.DAL
                     MessageId = 8,
                     RecipientId = 2,
                     SenderId = 3,
+                    MessageRead = false,
                     Subject = "RE:Totally Fine Car",
                     Body = "Alright captain, I think I like your style. You didn't have to narrate those cool spit actions, " +
                     "but you went ahead and did anyway, like a boss. I’ll take your deal old man. Meet downtown tomorrow. " +

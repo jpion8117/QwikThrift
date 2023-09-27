@@ -12,6 +12,16 @@ namespace QwikThrift.Pages.Users
     {
         private readonly QwikThriftDbContext _dbContext;
 
+        /// <summary>
+        /// Store a JSON formatted string for arguments to be sent with the ReturnURL
+        /// upon successful login
+        /// </summary>
+        [BindProperty]
+        public string ReturnArgs { get; set; }
+        
+        /// <summary>
+        /// Store a URL for the user to be returned to upon successful login
+        /// </summary>
         [BindProperty]
         public string ReturnURL { get; set; }
 
