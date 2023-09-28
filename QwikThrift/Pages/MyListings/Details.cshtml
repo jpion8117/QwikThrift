@@ -12,7 +12,17 @@
             @Html.AntiForgeryToken()
 
             <div class="form-group m-1">
-                <img class="col-12" src="@(Model.Item.Images.Count > 0 ? Model.Item.Images[0].FullPath : "")" alt="Listing Image" />
+                        @for (int i = 0; i < Model.Item.Images.Count; i++)
+                        {
+                             <img class="d-block w-100" src="@Model.Item.Images[i].FullPath" />
+                             <br />
+                        }
+            </div>
+            <div class="form-group m-1 ">
+                <label class="fw-bolder">Listed By:</label>
+                <span>@Model.Item.Owner.Username on 
+                    @Model.Item.ListingTime.ToShortDateString()
+                </span>
             </div>
             <div class="form-group m-1">
                 <label class="fw-bolder">Price:</label>

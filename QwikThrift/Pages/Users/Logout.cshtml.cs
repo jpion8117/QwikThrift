@@ -21,9 +21,9 @@ namespace QwikThrift.Pages.Users
             userMan.DeleteUserSession();
 
             if (returnUrl.IsNullOrEmpty())
-                return RedirectToPagePermanent("/Index");
+                return RedirectToPage("/Index");
 
-            return RedirectPermanent(returnUrl);
+            return Redirect(returnUrl);
         }
     }
 }

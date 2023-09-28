@@ -2,4 +2,13 @@
 @model QwikThrift.Pages.Messages.ViewModel
 @{
 }
-it worked...
+<label asp-for="Message.Subject"></label>
+<input asp-for="Message.Subject" width="100%" readonly />
+<br />
+<label asp-for="Message.Sender.Username"></label>
+<input asp-for="Message.Sender.Username" width="100%" readonly />
+<br />
+<label asp-for="Message.Body"></label>
+<textarea asp-for="Message.Body" width="100%" readonly></textarea>
+<br />
+<a class="btn btn-primary" asp-page="/Messages/Index" asp-route-mode="@Model.ReturnMode">Return to @Model.ReturnMode</a>

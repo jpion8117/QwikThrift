@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿#nullable disable
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using QwikThrift.Models;
 using QwikThrift.Models.DAL;
 
 namespace QwikThrift.Pages
@@ -17,6 +19,9 @@ namespace QwikThrift.Pages
         public List<Listing> LastFiveListings { get; set; }
         public void OnGet()
         {
+            //provide UserManager access to the _dbContext
+            var userMan = new UserManager(HttpContext.Session, _dbContext);
+
             // Retrieve the last 5 listings from the database
             LastFiveListings = _dbContext.Listings
                 .OrderByDescending(listing => listing.ListingTime)
