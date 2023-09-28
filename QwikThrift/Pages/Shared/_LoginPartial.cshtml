@@ -1,13 +1,13 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@inject QwikThrift.Models.DAL.QwikThriftDbContext dBContext
+@inject QwikThrift.Models.DAL.QwikThriftDbContext databaseAccessor
 @inject IHttpContextAccessor contextAccessor
 @{
     QwikThrift.Models.UserManager? userMan = null;
     if (contextAccessor != null && contextAccessor.HttpContext != null)
     {
-        userMan = new QwikThrift.Models.UserManager(contextAccessor.HttpContext.Session);
+        userMan = new QwikThrift.Models.UserManager(contextAccessor.HttpContext.Session, databaseAccessor);
     }
 }
 
