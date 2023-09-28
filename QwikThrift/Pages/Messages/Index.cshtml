@@ -12,8 +12,8 @@
     }
     @foreach (var message in Model.Messages)
     {
-        <form asp-page="/Messages/View" asp-route-id="@message.MessageId" method="post">
-            <button class="list-group-item" type="submit" style="width:100%!important">
+        <form asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
+            <button class="list-group-item @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread")" type="submit" style="width:100%!important">
                 <div class="fw-bolder">
                     Subject: @message.Subject
                 </div>
