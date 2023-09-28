@@ -33,6 +33,10 @@ namespace QwikThrift.Models.DAL
         public QwikThriftDbContext(DbContextOptions<QwikThriftDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //ensure Username is always unique
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username).IsUnique();
+
             //bind UserId of message sender to message
             modelBuilder.Entity<Message>()
                 .HasOne<User>(m => m.Sender)
