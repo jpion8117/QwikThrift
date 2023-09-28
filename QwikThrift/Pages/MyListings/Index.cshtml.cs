@@ -52,7 +52,7 @@ namespace QwikThrift.Pages.MyListings
                 query = query.Where(listing => listing.Category.CategoryName == ItemCategory);
             }
 
-            // Apply sorting based on the SortOrder property
+
             switch (SortOrder)
             {
                 case "ListingTimeAsc":
@@ -61,9 +61,8 @@ namespace QwikThrift.Pages.MyListings
                 case "ListingTimeDesc":
                     query = query.OrderByDescending(listing => listing.ListingTime);
                     break;
-                // Add more cases for other sorting options as needed
+
                 default:
-                    // Default sorting order, e.g., by ListingTime descending (most recent first)
                     query = query.OrderByDescending(listing => listing.ListingTime);
                     break;
             }
