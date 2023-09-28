@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QwikThrift.Models.DAL
@@ -22,6 +23,7 @@ namespace QwikThrift.Models.DAL
         /// <summary>
         /// Username chosen by user, must be unique (will impliment later)
         /// </summary>
+        [Required]
         public string Username { get; set; }
         
         /// <summary>
@@ -44,6 +46,7 @@ namespace QwikThrift.Models.DAL
         /// <summary>
         /// SHA512 encrypted password stored to the database.
         /// </summary>
+        [Required]
         public string PasswordHash 
         { 
             get => _passwordHash; 
@@ -53,6 +56,7 @@ namespace QwikThrift.Models.DAL
         /// <summary>
         /// User's email address
         /// </summary>
+        [Required]
         public string Email { get; set; }
         
         /// <summary>

@@ -12,7 +12,7 @@ using QwikThrift.Models.DAL;
 namespace QwikThrift.Migrations
 {
     [DbContext(typeof(QwikThriftDbContext))]
-    [Migration("20230928224826_uniqueConstraintAddedToUsername")]
+    [Migration("20230928225428_uniqueConstraintAddedToUsername")]
     partial class uniqueConstraintAddedToUsername
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,7 +243,7 @@ namespace QwikThrift.Migrations
                             ListingId = 4,
                             CategoryId = 2,
                             Description = "Need to sell ASAP, moving far, FAR, VERY FAR away soon. Table is self-clearing, food just flies off on its own! No input needed, just line the floor with plastic and clearing the table after dinner will be a thing of the past. I'd recommend not using any sharp utensils, maybe stick to disposable cutlery. Dining set is self-healing! We caught it on fire once, it burned up completely but was ready for dinner the very next day! My loss is your gain on this antique table and chairs as I moving as soon as my house is done burning which could be anywhere from today to a week from now. Come pick up this lovely dining set free of charge! No really, please! You can have it! Oh God, it knows what we'reeadfdsaf",
-                            ListingTime = new DateTime(2023, 9, 28, 18, 48, 25, 760, DateTimeKind.Local).AddTicks(4252),
+                            ListingTime = new DateTime(2023, 9, 28, 18, 54, 28, 243, DateTimeKind.Local).AddTicks(6174),
                             OwnerId = 4,
                             Price = 0f,
                             SaleStatus = false,
@@ -377,22 +377,24 @@ namespace QwikThrift.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("Username")
-                        .IsUnique()
-                        .HasFilter("[Username] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users");
 
