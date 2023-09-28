@@ -14,17 +14,19 @@
             {
                 @foreach (var listing in Model.Listings)
                 {
-                    <div class="listing">
-                        <div class="row">
-                            <div class="form-group col-4">
-                                <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
-                            </div>
+                    <div class="row listing">
+                        
+                        
+                        <div class="form-group col-4">
+                            <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
+                        </div>
+
+
+                        <div class="col-6">
                             <div class="form-group col-8">
                                 <label>Title:</label>
                                 <p>@listing.Title</p>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="form-group col-4">
                                 <label>Price:</label>
                                 <p>@listing.Price.ToString("C")</p>
@@ -34,6 +36,7 @@
                                 <p>@listing.Category.CategoryName</p>
                             </div>
                         </div>
+                        
                         
                         <div class="text-center" style="padding-top:15px;">
                             <a class="btn btn-primary" asp-page="/MyListings/Details" asp-route-id="@listing.ListingId">
@@ -54,9 +57,8 @@
         <form method="get">
             <p class="text-white">
                 <input type="submit" value="Filter My Listings" class="btn btn-primary col-12" />
-                <button type="submit" name="SortOrder" value="ListingTimeAsc" class="btn btn-primary">Sort Time (Asc)</button>
-                <button type="submit" name="SortOrder" value="ListingTimeDesc" class="btn btn-primary">Sort Time (Desc)</button>
-                <br />
+                <hr/>
+      
                 Title: <input type="text" asp-for="SearchString" class="col-8 m-2 p-2" />
                 <br />
                 Sort By:
@@ -64,9 +66,13 @@
                     <option value="">All</option>
                 </select>
                 <br />
+                <hr />
+                <button type="submit" name="SortOrder" value="ListingTimeAsc" class="btn btn-primary">Sort By Listing Time (Asc)</button>
+                <button type="submit" name="SortOrder" value="ListingTimeDesc" class="btn btn-primary">Sort By Listing Time (Desc)</button>
+                <hr/>
 
             </p>
-            <hr />
+            
             <a class="btn btn-primary col-2" asp-page="/MyListings/Create">
                 Create New Listing
             </a>
