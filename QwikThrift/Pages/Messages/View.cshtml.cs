@@ -9,7 +9,11 @@ namespace QwikThrift.Pages.Messages
     public class ViewModel : PageModel
     {
         private readonly QwikThriftDbContext _dbContext;
+
+        [BindProperty]
         public Message Message { get; private set; }
+
+        [BindProperty]
         public string ReturnMode { get; private set; }
 
         public ViewModel(QwikThriftDbContext dbContext)
