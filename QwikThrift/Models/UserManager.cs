@@ -4,7 +4,7 @@ namespace QwikThrift.Models
 {
     public class UserManager
     {
-        static private QwikThriftDbContext _dbContext;
+        private QwikThriftDbContext _dbContext;
         private ISession _session;
 
         /// <summary>
@@ -55,10 +55,6 @@ namespace QwikThrift.Models
         {
             _session = session;
             _dbContext = dbContext;
-        }
-        public UserManager(ISession session) 
-        {
-            _session = session;
         }
 
         /// <summary>
