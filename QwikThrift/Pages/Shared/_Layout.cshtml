@@ -21,11 +21,11 @@
             <div class="container">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="Toggle navigation" href="#collapsingMenu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class=" navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav nav-ul flex-grow-1">
+                <div class=" navbar-collapse collapse d-sm-inline-flex justify-content-between" id="collapsingMenu">
+                    <ul class="navbar-nav nav-ul flex-grow-1 flex-sm-wrap accordion-collapse">
 
                         <li class=" nav-item ">
                             <a class="nav-link text-white fs-4" asp-area="" asp-page="/Index">Home</a>
@@ -46,9 +46,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-white fs-4" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        <li class=" float-right ml-auto px-2" >
+                            <partial name="_LoginPartial" class=""/>
+                        </li>
                     </ul>
 
-                    <partial name="_LoginPartial" />
+                    
                     
                 </div>
             </div>
