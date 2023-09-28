@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QwikThrift.Models.DAL;
 
-namespace QwikThrift.Pages.MyListings
+namespace QwikThrift.Pages.Browse
 {
     public class DetailsModel : PageModel
     {
