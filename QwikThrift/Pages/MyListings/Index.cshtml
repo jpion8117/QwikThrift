@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "My Listings";
 }
-<h1>My Listings</h1>
+<div class="row">
+    <h1 class="col-6">My Listings</h1>
+
+</div>
 <div class="row">
     <div class="col-md-8 data-view">
         <div class="container-fluid">
@@ -14,7 +17,7 @@
                     <div class="listing">
                         <div class="row">
                             <div class="form-group col-4">
-                                <img class="col-12" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
+                                <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
                             </div>
                             <div class="form-group col-8">
                                 <label>Title:</label>
@@ -43,13 +46,32 @@
             }
             else
             {
-                <p>You have no listings.</p>
+                <p>No listings to show..</p>
             }
         </div>
     </div>
-    <div class="col-md-4 text-center">
-        <a class="btn btn-primary" asp-page="/MyListings/Create">
-            Create New Listing
-        </a>
+    <div class="col-md-4">
+        <form method="get">
+            <p class="text-white">
+                <input type="submit" value="Filter My Listings" class="btn btn-primary col-12" />
+                <button type="submit" name="SortOrder" value="ListingTimeAsc" class="btn btn-primary">Sort Time (Asc)</button>
+                <button type="submit" name="SortOrder" value="ListingTimeDesc" class="btn btn-primary">Sort Time (Desc)</button>
+                <br />
+                Title: <input type="text" asp-for="SearchString" class="col-8 m-2 p-2" />
+                <br />
+                Sort By:
+                <select asp-for="ItemCategory" asp-items="Model.Categories" class="col-7 m-2 p-2">
+                    <option value="">All</option>
+                </select>
+                <br />
+
+            </p>
+            <hr />
+            <a class="btn btn-primary col-2" asp-page="/MyListings/Create">
+                Create New Listing
+            </a>
+        </form>
     </div>
+
+
 </div>
