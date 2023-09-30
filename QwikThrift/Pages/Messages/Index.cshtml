@@ -3,33 +3,50 @@
 @{
     Layout = "_MessageLayout";
 }
-<div class="list-group d-flex flex-column align-items-stretch">
-    @if (Model.Messages.Count == 0)
-    {
-        <div class="list-group-item flex-fill">
-            Your @ViewBag.Mode is empty...
+<div class="col-md-8">
+    <div class="list-group d-flex flex-column align-items-stretch">
+        @if (Model.Messages.Count == 0)
+        {
+            <div class="list-group-item flex-fill">
+                Your @ViewBag.Mode is empty...
+            </div>
+        }
+        @foreach (var message in Model.Messages)
+        {
+            <form asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
+                <button class="list-group-item @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread") text-start" type="submit" style="width:100%!important">
+                    <div class="fw-bolder">
+                        Subject: @message.Subject
+                    </div>
+                    <div class="fw-bold">
+                        From: @message.Sender.Username
+                    </div>
+                    <div class="fw-bold">
+                        Date: @message.Timestamp.ToLongDateString() @message.Timestamp.ToShortTimeString()
+                    </div>
+                    <br />
+                    <div class="text-sm-start text-wrap">
+                        @(message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
+                    </div>
+                    <br />
+                    <div class="text-sm-end text-muted @(ViewBag.Mode == "inbox" ? "" : "visually-hidden")">
+                        remove
+                    </div>
+                </button>
+            </form>
+        }
+    </div>
+</div>
+<div class="col-md-2">
+    <form asp-page="/Messages/Index" class="row my-2" method="get">
+        <input asp-for="SearchString" class="col-md-8" />
+        <button type="submit" class="col-md-4">Search</button>
+    </form>
+    <div class="row">
+        <div class="col-md-6 text-white">SORT DATE: </div>
+        <div class="col-md-6 text-white">
+            <a asp-page="/Messages/Index" asp-route-sortMode="asc" class="text-white">ASC</a> |
+            <a asp-page="/Messages/Index" asp-route-sortMode="desc" class="text-white">DESC</a>
         </div>
-    }
-    @foreach (var message in Model.Messages)
-    {
-        <form asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
-            <button class="list-group-item @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread")" type="submit" style="width:100%!important">
-                <div class="fw-bolder">
-                    Subject: @message.Subject
-                </div>
-                <br />
-                <div class="fw-bold">
-                    From: @message.Sender.Username
-                </div>
-                <br />
-                <div class="text-sm-start text-wrap">
-                    @(message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
-                </div>
-                <br />
-                <div class="text-sm-end text-muted @(ViewBag.Mode == "inbox" ? "" : "visually-hidden")">
-                    remove
-                </div>
-            </button>
-        </form>
-    }
+    </div>
 </div>
