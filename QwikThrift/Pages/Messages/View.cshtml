@@ -2,13 +2,21 @@
 @model QwikThrift.Pages.Messages.ViewModel
 @{
 }
-<label asp-for="Message.Subject"></label>
-<input asp-for="Message.Subject" width="100%" readonly />
-<br />
-<label asp-for="Message.Sender.Username"></label>
-<input asp-for="Message.Sender.Username" width="100%" readonly />
-<br />
-<label asp-for="Message.Body"></label>
-<textarea asp-for="Message.Body" width="100%" readonly></textarea>
-<br />
-<a class="btn btn-primary" asp-page="/Messages/Index" asp-route-mode="@Model.ReturnMode">Return to @Model.ReturnMode</a>
+<div class="row">
+    <label asp-for="Message.Subject" class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></label>
+    <input asp-for="Message.Subject" class="col-xxl-9" readonly />
+</div>
+<div class="row my-2">
+    <label asp-for="Message.Sender.Username" class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></label>
+    <input asp-for="Message.Sender.Username" class="col-xxl-9" readonly />
+</div>
+<div class="row my-2">
+    <div class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></div>
+    <textarea asp-for="Message.Body" class="col-xxl-9" style="min-height:200px" readonly></textarea>
+</div>
+<div class="row">
+    <div class="col-xxl-1"></div>
+    <div class="col-9-lg d-flex flex-row justify-content-center">
+        <a class="btn btn-primary" asp-page="/Messages/Index" asp-route-mode="@Model.ReturnMode">Return to @Model.ReturnMode</a>
+    </div>
+</div>
