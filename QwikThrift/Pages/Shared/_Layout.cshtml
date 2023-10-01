@@ -12,20 +12,19 @@
 <body>
     <header>
         <nav class="navbar nav-qwik navbar-brand navbar-expand-md navbar navbar-toggleable-md navbar-light navbar-text mb-3">
-            <a class="navbar-brand mx-auto" asp-area="" asp-page="/Index">
-                <div class="text-center">
-                    <img src="/images/qwik.svg" alt="Qwik Thirft Logo" class="mx-auto" width="200" height="200">
-                </div>
-            </a>
-
-            <div class="container">
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            <div class="container float-start">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation" href="#collapsingMenu">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon text-white"></span>
                 </button>
-                <div class=" navbar-collapse collapse d-sm-inline-flex justify-content-between" id="collapsingMenu">
-                    <ul class="navbar-nav nav-ul flex-grow-1 flex-sm-wrap accordion-collapse">
+                <h1 class="d-md-none d-inline float-end qwik-thrift">Qwik Thrift</h1>
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between" id="collapsingMenu">
+                    <a class="navbar-brand m-2 mx-4" asp-area="" asp-page="/Index">
+                        <div class="text-center">
+                            <img src="/images/qwik.svg" alt="Qwik Thirft Logo" class="mx-auto" width="150" height="150">
+                        </div>
+                    </a>
+                    <ul class="navbar-nav nav-ul flex-grow-1 flex-m-wrap accordion-collapse">
 
                         <li class=" nav-item ">
                             <a class="nav-link text-white fs-4" asp-area="" asp-page="/Index">Home</a>
@@ -46,7 +45,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-white fs-4" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class=" float-right ml-auto px-2" >
+                        <li class=" float-md-right ml-auto px-2" >
                             <partial name="_LoginPartial" class=""/>
                         </li>
                     </ul>
