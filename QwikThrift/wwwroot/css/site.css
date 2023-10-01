@@ -101,3 +101,9 @@ body {
 .navbar-custom .navbar-text {
     color: white;
 }
+
+.nav-link:hover {
+    background-color: #555555;
+    transition: ease-in-out;
+    transition-duration: 550ms;
+}
