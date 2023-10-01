@@ -102,6 +102,10 @@ body {
     color: white;
 }
 
+.nav-link {
+    border-radius: 6px;
+}
+
 .nav-link:hover {
     background-color: #555555;
     transition: ease-in-out;
