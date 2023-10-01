@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "_Layout";
 }
+
+@inject IHttpContextAccessor ctxAccess
+
 <div class="row">
     <div class="list-group col-md-2">
         <a asp-page="Index" asp-route-mode="inbox" class="list-group-item 
@@ -10,8 +13,10 @@
             </a>
         <a asp-page="Index" asp-route-mode="outbox" class="list-group-item list-group-item-action
             @(ViewBag.Mode == "outbox" ? "active" : "")">Sent</a>
-        <a asp-page="Index" asp-route-mode="compose" class="list-group-item list-group-item-action 
-            list-group-item-primary @(ViewBag.Mode == "compose" ? "active" : "")">Compose Message</a>
+        <a asp-page="Send" asp-route-returnUrl="@(ctxAccess.HttpContext != null ? ctxAccess.HttpContext.Request.Path : "")"
+            class="list-group-item list-group-item-action list-group-item-primary">
+                Compose Message
+        </a>
     </div>
     @RenderBody()
 </div>

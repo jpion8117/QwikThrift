@@ -2,12 +2,29 @@
 @model QwikThrift.Pages.Messages.SendModel
 @{
 }
-<label asp-for="Message.Subject"></label>
-<input asp-for="Message.Subject" width="100%" />
-<br />
-<label asp-for="Message.Sender.Username"></label>
-<input asp-for="Message.Sender.Username" width="100%" />
-<br />
-<label asp-for="Message.Body"></label>
-<textarea asp-for="Message.Body" width="100%"></textarea>
-<br />
+<form asp-page="/Messages/Send" method="post">
+    <div class="row">
+        <label asp-for="Message.Subject" class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></label>
+        <input asp-for="Message.Subject" class="col-xxl-9" />
+    </div>
+    <span asp-validation-for="Recipient" class="row w-100 d-block text-center text-danger"></span>
+    <div class="row my-2">
+        <label asp-for="Recipient" class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></label>
+        <input asp-for="Recipient" class="col-xxl-9" />
+    </div>
+    <div class="row my-2">
+        <div class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></div>
+        <textarea asp-for="Message.Body" class="col-xxl-9" style="min-height:200px"></textarea>
+    </div>
+    <div class="row">
+        <div class="col-xxl-1"></div>
+        <div class="col-xxl-9 d-flex flex-row justify-content-center">
+            <button class="btn btn-primary">Send</button>
+            <a class="btn btn-secondary ml-2" href="@(string.IsNullOrEmpty(Model.ReturnUrl) ? Url.Page("/Index") : Model.ReturnUrl)">
+                Cancel
+            </a>
+        </div>
+    </div>
+    <input asp-for="SenderId" class="visually-hidden" />
+    <input asp-for="ReturnUrl" class="visually-hidden" />
+</form>
