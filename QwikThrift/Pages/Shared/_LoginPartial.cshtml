@@ -14,16 +14,16 @@
 <ul class="navbar-nav">
 @if (userMan != null ? userMan.UserLoggedIn : false)
 {
-    <li class="nav-item nav-link text-white fs-5">Welcome @(userMan.User != null ? userMan.User.Username : "error")!</li>
+    <li class="nav-item nav-link text-white">Welcome @(userMan.User != null ? userMan.User.Username : "error")!</li>
     <li class="nav-item">
-        <a asp-page="/Users/Logout" class="nav-link text-white fs-5">Logout</a>
+        <a asp-page="/Users/Logout" class="nav-link text-white">Logout</a>
     </li>
 }
 else
 {
     <li class="nav-item">
         <a asp-page="/Users/Login" asp-route-returnUrl="@(contextAccessor != null && 
-            contextAccessor.HttpContext != null ? contextAccessor.HttpContext.Request.Path : "")" class="nav-link text-white fs-5">Login</a>
+            contextAccessor.HttpContext != null ? contextAccessor.HttpContext.Request.Path : "")" class="nav-link text-white">Login</a>
     </li>
 }
 </ul>
