@@ -4,10 +4,12 @@
     ViewData["Title"] = "Browse Listings";
 }
 
-<h1>Browse Listings</h1>
+<div class="row">
+    <h1 class="col-6">Browse Listings</h1>
+</div>
 
 <div class="row">
-    <div class="col-md-6 cust-view">
+    <div class="col-md-8 data-view">
         <form method="get">
             @Html.AntiForgeryToken()
             <div class="form-group">
