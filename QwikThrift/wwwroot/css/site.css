@@ -101,3 +101,11 @@ body {
 .navbar-custom .navbar-text {
     color: white;
 }
+
+button.btn-primary:hover {
+    background-color: #555555;
+}
+
+a.btn-secondary {
+    background-color: #0AC9BC;
+}

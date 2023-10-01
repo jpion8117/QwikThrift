@@ -19,8 +19,8 @@
     <div class="row">
         <div class="col-xxl-1"></div>
         <div class="col-xxl-9 d-flex flex-row justify-content-center">
-            <button class="btn btn-primary">Send</button>
-            <a class="btn btn-secondary ml-2" href="@(string.IsNullOrEmpty(Model.ReturnUrl) ? Url.Page("/Index") : Model.ReturnUrl)">
+            <button type="submit" class="btn btn-primary">Send</button>
+            <a class="btn btn-secondary ms-2" href="@(string.IsNullOrEmpty(Model.ReturnUrl) ? Url.Page("/Index") : Model.ReturnUrl)">
                 Cancel
             </a>
         </div>
