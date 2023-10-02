@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details:</h1>
+<h1>Details</h1>
 
 <div class="row ">
     <div class="col-md-8 data-view">
@@ -48,5 +48,10 @@
         <a class="btn btn-primary" asp-page="/MyListings/Index" >
             Back to My Listings
         </a>
+        
+        <a class="btn btn-primary mt-2" asp-page="/MyListings/Edit" asp-route-id="@Model.Item.ListingId">
+            Edit Listing
+        </a>
+  
     </div>
 </div>
