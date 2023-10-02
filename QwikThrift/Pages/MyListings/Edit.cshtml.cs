@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QwikThrift.Models.DAL;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 
 namespace QwikThrift.Pages.MyListings
@@ -20,7 +26,7 @@ namespace QwikThrift.Pages.MyListings
         [BindProperty]
         public Listing Listing { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -37,31 +43,34 @@ namespace QwikThrift.Pages.MyListings
 
             return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ListingId,Title,Price,Category,Description")] Listing listing)
         {
-            if (!ModelState.IsValid)
+            if (id != listing.ListingId)
             {
-                return Page();
+                return NotFound();
             }
 
-            // Update the listing in the database
-            _context.Attach(Listing).State = EntityState.Modified;
-
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ListingExists(Listing.ListingId))
+                try
                 {
-                    return NotFound();
+                    _context.Update(listing);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!ListingExists(listing.ListingId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction(nameof(Index));
             }
 
             return RedirectToPage("/MyListings/Index");
