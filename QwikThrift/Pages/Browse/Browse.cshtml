@@ -10,28 +10,77 @@
 
 <div class="row">
     <div class="col-md-8 data-view">
-        <form method="get">
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                <label>Image:</label>
-            </div>
-            <div class="form-group">
-                <label>Title:</label>
-            </div>
-            <div class="form-group">
-                <label>Price:</label>
-            </div>
-            <div class="form-group">
-                <label>Category:</label>
-            </div>
-            <div class="form-group">
-                <label>Decription:</label>
-            </div>
-        </form>
+        <div class="container-fluid">
+            @if (Model.Listings != null && Model.Listings.Any())
+            {
+                @foreach (var listing in Model.Listings)
+                {
+                    <div class="row listing">
+
+
+                        <div class="form-group col-4">
+                            <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="form-group col-8">
+                                <label>Title:</label>
+                                <p>@listing.Title</p>
+                            </div>
+
+                            <div class="form-group col-4">
+                                <label>Price:</label>
+                                <p>@listing.Price.ToString("C")</p>
+                            </div>
+
+                            <div class="form-group col-8">
+                                <label>Category:</label>
+                                <p>@listing.Category.CategoryName</p>
+                            </div>
+                        </div>
+
+
+                        <div class="text-center" style="padding-top:15px;">
+                            <a class="btn btn-primary" asp-page="/Browse/Details" asp-route-id="@listing.ListingId">
+                                Details
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                }
+            }
+            else
+            {
+                <p>No listings to show..</p>
+            }
+        </div>
     </div>
-    <div class="col-md-4" style="text-align:center;padding:10px;">
-        <button class="btn btn-primary">
-            <a class="text-dark" asp-area="" asp-page="/Browse/Index">Contact Seller</a>
-        </button>
+
+    <div class="col-md-4">
+        <form method="get">
+            <p class="text-white">
+                <input type="submit" value="Filter My Listings" class="btn btn-primary col-12" />
+                <hr />
+
+                Title: <input type="text" asp-for="SearchString" class="col-8 m-2 p-2" />
+                <br />
+                Sort By:
+                <select asp-for="ItemCategory" asp-items="Model.Categories" class="col-7 m-2 p-2">
+                    <option value="">All</option>
+                </select>
+                <br />
+                <hr />
+                <button type="submit" name="SortOrder" value="ListingTimeAsc" class="btn btn-primary">Sort By Listing Time (Asc)</button>
+                <button type="submit" name="SortOrder" value="ListingTimeDesc" class="btn btn-primary">Sort By Listing Time (Desc)</button>
+                <hr />
+
+            </p>
+
+            <button class="btn btn-primary">
+                <a class="text-white" asp-area="" asp-page="/Browse/Index">Contact Seller</a>
+            </button>
+        </form>
     </div>
 </div>
