@@ -3,20 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QwikThrift.Models.DAL;
-using System.Threading.Tasks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
-
+using QwikThrift.Models;
 
 namespace QwikThrift.Pages.MyListings
 {
     public class EditModel : PageModel
     {
-        private readonly QwikThriftDbContext _context;
+        private readonly QwikThriftDbContext _context; 
 
         public EditModel(QwikThriftDbContext context)
         {
@@ -26,14 +21,13 @@ namespace QwikThrift.Pages.MyListings
         [BindProperty]
         public Listing Listing { get; set; }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            // Retrieve the listing by ID from the database
             Listing = await _context.Listings.FirstOrDefaultAsync(m => m.ListingId == id);
 
             if (Listing == null)
@@ -43,42 +37,33 @@ namespace QwikThrift.Pages.MyListings
 
             return Page();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ListingId,Title,Price,Category,Description")] Listing listing)
+
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id != listing.ListingId)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return Page();
             }
 
-            if (ModelState.IsValid)
+            _context.Attach(Listing).State = EntityState.Modified;
+
+            try
             {
-                try
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Listings.Any(e => e.ListingId == Listing.ListingId))
                 {
-                    _context.Update(listing);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!ListingExists(listing.ListingId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToPage("/MyListings/Index");
-        }
-
-        private bool ListingExists(int id)
-        {
-            return _context.Listings.Any(e => e.ListingId == id);
+            return RedirectToPage("/MyListings/Index"); 
         }
     }
 }
