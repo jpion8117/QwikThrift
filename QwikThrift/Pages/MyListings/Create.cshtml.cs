@@ -37,7 +37,7 @@ namespace QwikThrift.Pages.MyListings
         public string Category {  get; set; }
         
         [BindProperty]
-        public IFormFileCollection FormFiles { get; set; }
+        public List<IFormFile> FormFiles { get; set; } = new List<IFormFile> { };
 
         public IActionResult OnGet()
         {
@@ -85,8 +85,9 @@ namespace QwikThrift.Pages.MyListings
                 Listing.CategoryId = category.CategoryId;
 
             _dbContext.Listings.Add(Listing);
+            _dbContext.SaveChanges();
             
-            foreach (var file in FormFiles.GetFiles("*"))
+            foreach (var file in FormFiles)
             {
                 string filename = file.FileName.Replace(' ', '_').ToLower() + '_' + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
                 string path = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
