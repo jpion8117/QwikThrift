@@ -90,7 +90,7 @@ namespace QwikThrift.Pages.MyListings
             foreach (var file in FormFiles)
             {
                 string filename = Listing.Title + '_' + Listing.Owner.Username + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-                string path = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
+                string path = Path.Combine(ImageReference.HostPath, "listingsInDev", Listing.ListingId.ToString());
 
                 var imageReference = new ImageReference();
 
@@ -102,10 +102,12 @@ namespace QwikThrift.Pages.MyListings
 
                 _dbContext.ImageReferences.Add(imageReference);
 
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
+                string filepath = Path.Combine(wwwRootPath, "listingsInDev", Listing.ListingId.ToString());
 
-                using (var filestream = new FileStream(imageReference.FullPath, FileMode.Create))
+                if (!Directory.Exists(filepath))
+                    Directory.CreateDirectory(filepath);
+
+                using (var filestream = new FileStream(Path.Combine(filepath, filename), FileMode.Create))
                 {
                     file.CopyTo(filestream);
                 }
