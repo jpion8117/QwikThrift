@@ -89,7 +89,7 @@ namespace QwikThrift.Pages.MyListings
             
             foreach (var file in FormFiles)
             {
-                string filename = file.FileName.Replace(' ', '_').ToLower() + '_' + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
+                string filename = Listing.Title + '_' + Listing.Owner.Username + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
                 string path = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
 
                 var imageReference = new ImageReference();

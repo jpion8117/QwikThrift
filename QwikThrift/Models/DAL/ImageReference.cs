@@ -37,7 +37,7 @@ namespace QwikThrift.Models.DAL
         [NotMapped]
         public string FullPath 
         {
-            get => Path + Filename;
+            get =>  Path + '\\' + Filename;
             
         }
 
