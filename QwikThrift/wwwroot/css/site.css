@@ -119,3 +119,14 @@ button.btn-primary:hover {
 a.btn-secondary {
     background-color: #0AC9BC;
 }
+
+#NotificationBanner {
+    animation-name: notificationBanner;
+    animation-delay: 4s;
+    animation-duration: 3s;
+}
+
+@keyframes notificationBanner {
+    from { display:block }
+    to{ display:none }
+}

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QwikThrift.Models;
 using QwikThrift.Models.DAL;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QwikThrift.Pages.Messages
 {
@@ -18,7 +20,7 @@ namespace QwikThrift.Pages.Messages
         public string ReturnUrl { get; set; } = "";
 
         [BindProperty]
-        public string Recipient { get; set; } = " ";
+        public string Recipient { get; set; } = "";
 
         [BindProperty]
         public int SenderId { get; set; } = -1;
@@ -44,11 +46,14 @@ namespace QwikThrift.Pages.Messages
 
             if (userMan.User != null)
             {
-                Message.Sender = userMan.User;
                 SenderId = userMan.User.UserId;
             }
             else
                 throw new ArgumentNullException("User not logged in"); //should never be thrown in theory...
+
+            //literally not sure why the model state needs to be cleared, but this line is here to 
+            //appease the ASP.NET gods who for some reason deem it nessassary!
+            ModelState.Clear();
 
             return Page();
         }
@@ -70,6 +75,8 @@ namespace QwikThrift.Pages.Messages
 
             _dbContext.Messages.Add(Message);
             _dbContext.SaveChanges();
+
+            NotificationBanner.SetBanner("Message delivered successfully!", "bg-success text-white text-center");
 
             if (ReturnUrl.IsNullOrEmpty())
                 return RedirectToPagePermanent("/Index");
