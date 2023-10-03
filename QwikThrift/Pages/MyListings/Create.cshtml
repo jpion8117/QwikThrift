@@ -1,60 +1,62 @@
 ﻿@page
-@model QwikThrift.Models.DAL.Listing
+@model QwikThrift.Pages.MyListings.CreateModel
+
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create New Listing</h1>
+<h1>Create</h1>
 
-<div class="row " >
-    <div class="col-md-12 ">
-        <form asp-action="Create" class="text-white">
+<h4>Listing</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label for="Images" class="control-label">Upload Images:</label>
-                <input type="file" id="Images" name="Images" multiple class="form-control" />
-                <span asp-validation-for="Images" class="text-danger"></span>
+                <label asp-for="Listing.Title" class="control-label"></label>
+                <input asp-for="Listing.Title" class="form-control" />
+                <span asp-validation-for="Listing.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Listing.Description" class="control-label"></label>
+                <input asp-for="Listing.Description" class="form-control" />
+                <span asp-validation-for="Listing.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label asp-for="Listing.OwnerId" class="control-label"></label>
+                <select asp-for="Listing.OwnerId" class ="form-control" asp-items="ViewBag.OwnerId"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Listing.SaleStatus" /> @Html.DisplayNameFor(model => model.Listing.SaleStatus)
+                </label>
             </div>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" class="col-7 m-2 p-2">
-                    <option value="">All</option>
-                </select>
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="Listing.Price" class="control-label"></label>
+                <input asp-for="Listing.Price" class="form-control" />
+                <span asp-validation-for="Listing.Price" class="text-danger"></span>
             </div>
-            <div class="form-group " >
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control text-wrap" style="height:100px;" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="form-group">
+                <label asp-for="Listing.CategoryId" class="control-label"></label>
+                <select asp-for="Listing.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
-            <div class="form-group d-lg-none">
-                <input type="hidden" asp-for="ListingId" class="form-control" />
-                <input type="hidden" asp-for="Owner" class="form-control" value=""/>
-                <input type="hidden" asp-for="OwnerId" class="form-control" value=""/>
-                <input type="hidden" asp-for="SaleStatus" class="form-control" value="false" />
+            <div class="form-group">
+                <label asp-for="Listing.ListingTime" class="control-label"></label>
+                <input asp-for="Listing.ListingTime" class="form-control" />
+                <span asp-validation-for="Listing.ListingTime" class="text-danger"></span>
             </div>
-            <div class="text-center">
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary mt-2" />
-                </div>
-                <div class=" mt-1">
-                    <a class="btn btn-primary" asp-page="/MyListings/Index">
-                        Back to My Listings
-                    </a>
-                </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-
-    
 </div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

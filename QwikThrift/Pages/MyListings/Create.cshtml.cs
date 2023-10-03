@@ -1,62 +1,46 @@
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using QwikThrift.Models.DAL;
-using Microsoft.AspNetCore.Http;
-using QwikThrift.Models;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using QwikThrift.Models.DAL;
 
 namespace QwikThrift.Pages.MyListings
 {
     public class CreateModel : PageModel
     {
-        private readonly QwikThriftDbContext _dbContext;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly QwikThrift.Models.DAL.QwikThriftDbContext _context;
 
-        public CreateModel(QwikThriftDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+        public CreateModel(QwikThrift.Models.DAL.QwikThriftDbContext context)
         {
-            _dbContext = dbContext;
-            _httpContextAccessor = httpContextAccessor;
+            _context = context;
         }
-
-        [BindProperty]
-        public Listing Listing { get; set; }
-        public SelectList Categories { get; set; }
-       
 
         public IActionResult OnGet()
         {
-            var userMan = new UserManager(_httpContextAccessor.HttpContext.Session, _dbContext);
-
-            if (!userMan.UserLoggedIn)
-            {
-                return RedirectToPagePermanent("/Users/Login", new { returnUrl = Request.GetEncodedUrl() });
-            }
-            
-            // Create a new Listing with pre-filled values
-            Listing = new Listing
-            {
-                Owner = userMan.User,          //Set User Name
-                OwnerId = userMan.User.UserId, //Set User ID
-                SaleStatus = false // Set SaleStatus to false
-            };
-            Categories = new SelectList(_dbContext.Categories.Select(c => c.CategoryName).Distinct());
+        ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
+        ViewData["OwnerId"] = new SelectList(_context.Users, "UserId", "Email");
             return Page();
         }
 
-        public IActionResult OnPost()
+        [BindProperty]
+        public Listing Listing { get; set; } = default!;
+        
+
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+          if (!ModelState.IsValid || _context.Listings == null || Listing == null)
             {
-                // If model validation fails, return to the page with validation errors.
                 return Page();
             }
-            
-            _dbContext.Listings.Add(Listing);
-            _dbContext.SaveChanges();
 
-            return RedirectToPage("/MyListings/Index");
+            _context.Listings.Add(Listing);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
