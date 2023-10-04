@@ -38,8 +38,8 @@ namespace QwikThrift.Pages.MyListings
 
         [BindProperty]
         public List<IFormFile> FormFiles { get; set; } = new List<IFormFile> { };
-
-        public IActionResult OnGet()
+        public Listing Item { get; private set; }
+        public IActionResult OnGet(int id)
         {
             var userMan = new UserManager(HttpContext.Session, _dbContext);
 
@@ -49,6 +49,12 @@ namespace QwikThrift.Pages.MyListings
             }
             ViewData["CategoryId"] = new SelectList(_dbContext.Categories, "CategoryId", "CategoryId");
 
+            Item = _dbContext.Listings.FirstOrDefault(item => item.ListingId == id);
+
+            if (Item == null)
+            {
+                return NotFound(); // Handle item not found
+            }
 
             Listing = new Listing
             {
@@ -86,7 +92,7 @@ namespace QwikThrift.Pages.MyListings
             if (category != null)
                 Listing.CategoryId = category.CategoryId;
 
-            _dbContext.Listings.Add(Listing);
+            _dbContext.Listings.Update(Item);
             _dbContext.SaveChanges();
 
             foreach (var file in FormFiles)
@@ -96,13 +102,14 @@ namespace QwikThrift.Pages.MyListings
                 string path = "\\images\\listingsInDev\\" + Listing.ListingId.ToString() + "\\";
 
                 var imageReference = new ImageReference();
-
+                
                 imageReference.Name = filename;
                 imageReference.Path = path;
                 imageReference.Description = $"Image from listing \"{Listing.Title}\"";
                 imageReference.Filename = filename;
                 imageReference.ListingId = Listing.ListingId;
 
+                
                 _dbContext.ImageReferences.Add(imageReference);
 
                 string filepath = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
