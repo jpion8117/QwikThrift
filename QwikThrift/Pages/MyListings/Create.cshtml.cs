@@ -91,8 +91,8 @@ namespace QwikThrift.Pages.MyListings
             
             foreach (var file in FormFiles)
             {
-                string filename = Listing.Title.Replace(' ', '_') + '_' + Listing.Owner.Username.Replace(' ', '_') + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-                //string path = Path.Combine("images", "listingsInDev", Listing.ListingId.ToString());
+                string filename = Listing.Owner.Username.Replace(' ', '_') + '_' + Listing.Title.Replace(' ', '_') + '_' + 
+                    DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
                 string path = "\\images\\listingsInDev\\" + Listing.ListingId.ToString() + "\\";
 
                 var imageReference = new ImageReference();
@@ -102,18 +102,12 @@ namespace QwikThrift.Pages.MyListings
                 imageReference.Description = $"Image from listing \"{Listing.Title}\""; 
                 imageReference.Filename = filename;
                 imageReference.ListingId = Listing.ListingId;
+                imageReference.ImageFile = file;
 
-                _dbContext.ImageReferences.Add(imageReference);
-
-                string filepath = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
-
-                if (!Directory.Exists(filepath))
-                    Directory.CreateDirectory(filepath);
-
-                using (var filestream = new FileStream(Path.Combine(filepath, filename), FileMode.Create))
-                {
-                    file.CopyTo(filestream);
-                }
+                if (imageReference.SaveImageToFile())
+                    _dbContext.ImageReferences.Add(imageReference);
+                else
+                    throw new Exception("File failed to save to disk.");
             }
 
             _dbContext.SaveChanges();
