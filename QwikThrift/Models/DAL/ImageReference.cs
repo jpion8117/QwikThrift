@@ -7,6 +7,8 @@ namespace QwikThrift.Models.DAL
 {
     public class ImageReference
     {
+        public static string HostPath {  get; set; } 
+
         /// <summary>
         /// Primary key/uniqueId
         /// </summary>
@@ -37,7 +39,7 @@ namespace QwikThrift.Models.DAL
         [NotMapped]
         public string FullPath 
         {
-            get => Path + Filename;
+            get =>  Path + '\\' + Filename;
             
         }
 

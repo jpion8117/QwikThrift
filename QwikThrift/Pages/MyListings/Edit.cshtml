@@ -1,42 +1,59 @@
-﻿@page
-@model EditModel
+﻿@page "{id:int}"
+@model QwikThrift.Pages.MyListings.CreateModel
 @{
-    ViewData["Title"] = "Edit Listing";
+    ViewBag.Title = $"Edit";
 }
 
-<h1>Edit Listing:</h1>
+<h1>Edit Listing</h1>
 
-<h4>Listing:</h4>
-
-<div class="row">
-    <div class="col-md-6 data-view">
-        <form method="post">
-            @Html.AntiForgeryToken() 
-
+<div class="row ">
+    <div class="col-md-12 ">
+        <form asp-action="Create" class="text-white" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label>Image:</label>
+                <label asp-for="FormFiles" class="control-label">Upload Images:</label>
+                <input asp-for="FormFiles" type="file" accept="image/*" multiple class="form-control" />
+                <span asp-validation-for="Listing.Images" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Price:</label>
+                <label asp-for="Listing.Title" class="control-label"></label>
+                <input asp-for="Listing.Title" class="form-control" />
+                <span asp-validation-for="Listing.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Title:</label>
+                <label asp-for="Listing.Price" class="control-label"></label>
+                <input asp-for="Listing.Price" class="form-control" />
+                <span asp-validation-for="Listing.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Category:</label>
+                <label asp-for="Category" class="control-label"></label><br />
+                <select asp-for="Category" asp-items="Model.Categories" class="col-md-12 p-2"></select>
+                <span asp-validation-for="Listing.Category" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label>Decription:</label>
+            <div class="form-group ">
+                <label asp-for="Listing.Description" class="control-label"></label>
+                <textarea asp-for="Listing.Description" class="form-control text-wrap" style="height:100px;"></textarea>
+                <span asp-validation-for="Listing.Description" class="text-danger"></span>
             </div>
-            <div style="text-align:center;">
-            <button style="margin-left:auto;margin-right:auto;" type="reset" class="btn btn-primary text-white">Reset</button>
-            <button type="submit" class="btn btn-primary text-white">Finish Editing</button>
+            <div class="text-center">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary mt-2" />
+                </div>
+                <div class=" mt-1">
+                    <a class="btn btn-primary" asp-page="/MyListings/Index">
+                        Back to My Listings
+                    </a>
+                </div>
             </div>
         </form>
     </div>
-    <div class="col-md-4 order-1" style="text-align:center;padding:10px;">
-        <button class="btn btn-primary">
-            <a class="text-white" asp-area="" asp-page="/MyListings/Index">Back to My Listings</a>
-        </button>
-    </div>
+
+
 </div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

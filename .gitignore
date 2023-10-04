@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/QwikThrift/wwwroot/images/listingsInDev/14
+/QwikThrift/wwwroot/images/listingsInDev/
