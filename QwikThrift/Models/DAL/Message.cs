@@ -17,6 +17,10 @@ namespace QwikThrift.Models.DAL
 
         public bool MessageEdited { get; set; }
 
+        public bool SenderDelete { get; set; }
+
+        public bool RecipientDelete { get; set; }
+
         public string Subject { get; set; }
         public string Body { get; set; }
         public DateTime Timestamp { get; set; }
