@@ -90,5 +90,16 @@ namespace QwikThrift.Models.DAL
 
             return File.Exists(System.IO.Path.Combine(path, Filename));
         }
+
+        /// <summary>
+        /// Removes file from the server, does not effect database reference.
+        /// </summary>
+        public void DeleteImageFromFile()
+        {
+            var path = HostPath + '\\' + Path;
+
+            if (File.Exists(System.IO.Path.Combine(path, Filename)))
+                File.Delete(System.IO.Path.Combine(path, Filename));
+        }
     }
 }
