@@ -57,7 +57,13 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         public void DeleteAssociatedImages()
         {
-            //coming soon.
+            foreach (ImageReference image in Images)
+                image.DeleteImageFromFile();
+
+            var path = Path.Combine(ImageReference.HostPath, "listingsInDev", ListingId.ToString());
+
+            if (Directory.Exists(path))
+                Directory.Delete(path);
         }
     }
 }
