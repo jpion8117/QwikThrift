@@ -79,6 +79,8 @@ namespace QwikThrift.Pages.MyListings
             else
                 throw new ArgumentNullException(nameof(userMan.User));
 
+            Listing.ListingTime = DateTime.Now;
+
             //lookup category in database and store its ID in the listing
             var category = _dbContext.Categories.FirstOrDefault(c => c.CategoryName == Category);
             if (category != null)
@@ -89,8 +91,9 @@ namespace QwikThrift.Pages.MyListings
             
             foreach (var file in FormFiles)
             {
-                string filename = Listing.Title + '_' + Listing.Owner.Username + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-                string path = Path.Combine(ImageReference.HostPath, "listingsInDev", Listing.ListingId.ToString());
+                string filename = Listing.Title.Replace(' ', '_') + '_' + Listing.Owner.Username.Replace(' ', '_') + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
+                //string path = Path.Combine("images", "listingsInDev", Listing.ListingId.ToString());
+                string path = "\\images\\listingsInDev\\" + Listing.ListingId.ToString() + "\\";
 
                 var imageReference = new ImageReference();
 
@@ -102,7 +105,7 @@ namespace QwikThrift.Pages.MyListings
 
                 _dbContext.ImageReferences.Add(imageReference);
 
-                string filepath = Path.Combine(wwwRootPath, "listingsInDev", Listing.ListingId.ToString());
+                string filepath = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
 
                 if (!Directory.Exists(filepath))
                     Directory.CreateDirectory(filepath);
