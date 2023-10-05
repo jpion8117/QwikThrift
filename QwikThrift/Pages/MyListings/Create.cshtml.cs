@@ -90,7 +90,8 @@ namespace QwikThrift.Pages.MyListings
 
             _dbContext.Listings.Add(Listing);
             _dbContext.SaveChanges();
-            
+
+
             return RedirectToPage("/MyListings/AddImages", new { id = Listing.ListingId, mode = "Create" });
         }
     }

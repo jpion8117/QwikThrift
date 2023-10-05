@@ -72,44 +72,13 @@ namespace QwikThrift.Pages.MyListings
                 }
             }
                 
-            
-
-            //var imageReferencesToDelete = _context.ImageReferences
-            //    .Where(ir => ir.ListingId == listingIdToDeleteFilesFor)
-            //    .ToList();
-
-
-
-
-            //foreach (var imageReference in imageReferencesToDelete)
-            //{
-            //    string filePathToDelete = Path.Combine(wwwRootPath, imageReference.Path, imageReference.Name);
-
-            //    // Create a FileInfo object
-            //    FileInfo fileInfo = new FileInfo(filePathToDelete);
-
-            //    // Check if the file exists and delete it
-            //    if (fileInfo.Exists)
-            //    {
-            //        fileInfo.Delete();
-            //    }
-
-
-            //    // Remove the ImageReference entity from the database context
-            //    _context.ImageReferences.Remove(imageReference);
-            //}
-
-            //string filepath = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
-
-            //if (Directory.Exists(filepath))
-            //    Directory.Delete(filepath);
-
             var listing = await _context.Listings.FindAsync(id);
 
             if (listing != null)
             {
                 Listing = listing;
                 _context.Listings.Remove(Listing);
+                NotificationBanner.SetBanner("Listing deleted successfully!", "bg-success text-white text-center");
                 await _context.SaveChangesAsync();
             }
 
