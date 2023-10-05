@@ -39,6 +39,7 @@ namespace QwikThrift.Pages.MyListings
         [BindProperty]
         public List<IFormFile> FormFiles { get; set; } = new List<IFormFile> { };
         public Listing Item { get; private set; }
+
         public IActionResult OnGet(int id)
         {
             var userMan = new UserManager(HttpContext.Session, _dbContext);
