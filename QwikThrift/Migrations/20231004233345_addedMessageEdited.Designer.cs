@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QwikThrift.Models.DAL;
 
@@ -11,9 +12,10 @@ using QwikThrift.Models.DAL;
 namespace QwikThrift.Migrations
 {
     [DbContext(typeof(QwikThriftDbContext))]
-    partial class QwikThriftDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231004233345_addedMessageEdited")]
+    partial class addedMessageEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace QwikThrift.Migrations
                             ListingId = 4,
                             CategoryId = 2,
                             Description = "Need to sell ASAP, moving far, FAR, VERY FAR away soon. Table is self-clearing, food just flies off on its own! No input needed, just line the floor with plastic and clearing the table after dinner will be a thing of the past. I'd recommend not using any sharp utensils, maybe stick to disposable cutlery. Dining set is self-healing! We caught it on fire once, it burned up completely but was ready for dinner the very next day! My loss is your gain on this antique table and chairs as I moving as soon as my house is done burning which could be anywhere from today to a week from now. Come pick up this lovely dining set free of charge! No really, please! You can have it! Oh God, it knows what we'reeadfdsaf",
-                            ListingTime = new DateTime(2023, 10, 4, 19, 38, 16, 413, DateTimeKind.Local).AddTicks(3955),
+                            ListingTime = new DateTime(2023, 10, 4, 19, 33, 45, 97, DateTimeKind.Local).AddTicks(686),
                             OwnerId = 4,
                             Price = 0f,
                             SaleStatus = false,
@@ -266,14 +268,8 @@ namespace QwikThrift.Migrations
                     b.Property<bool>("MessageRead")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("RecipientDelete")
-                        .HasColumnType("bit");
-
                     b.Property<int>("RecipientId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("SenderDelete")
-                        .HasColumnType("bit");
 
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
@@ -299,9 +295,7 @@ namespace QwikThrift.Migrations
                             Body = "Hello \"Tyler,\" or should I call you Jeremy! You thought you could get rid of me that easily! FOOOOOOOOL! I am everywhere, I am nowhere, I am your personal living nightmare.",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 4,
-                            SenderDelete = false,
                             SenderId = 5,
                             Subject = "Victorian Dining Set. Not Haunted",
                             Timestamp = new DateTime(2023, 7, 3, 17, 42, 0, 0, DateTimeKind.Unspecified)
@@ -312,9 +306,7 @@ namespace QwikThrift.Migrations
                             Body = "Hi Scott, I have some questions about the bus you have for sale. Do you know if this magical bus can traverse dimensions? I’m looking to get rid of some… unique furniture and I really need it FAR away. I can’t say much, I think I’m being watched! I’ll give you whatever you want, I don’t know where else to turn. This is the first piece of good news. Got to go!!!!!",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 3,
-                            SenderDelete = false,
                             SenderId = 4,
                             Subject = "School Bus Camper",
                             Timestamp = new DateTime(2023, 7, 3, 17, 46, 0, 0, DateTimeKind.Unspecified)
@@ -325,9 +317,7 @@ namespace QwikThrift.Migrations
                             Body = "Tyler, I’m not sure what you mean by that. As I mentioned in my post, I’ve really only driven it once and it didn’t go well. You’re more than welcome to come see for yourself, but I will not be setting foot in that thing again. You can take it for a test drive if you need to, but I’ll need the money up front if you’re planning on leaving the neighborhood. I’ll have it towed to a nearby parking lot and we can meet up there.",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 4,
-                            SenderDelete = false,
                             SenderId = 3,
                             Subject = "RE:School Bus Camper",
                             Timestamp = new DateTime(2023, 7, 3, 19, 12, 0, 0, DateTimeKind.Unspecified)
@@ -338,9 +328,7 @@ namespace QwikThrift.Migrations
                             Body = "So listen, this “car” is a rusty hunk of metal. I’d give ya 300 bucks if you haul it to me.",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 2,
-                            SenderDelete = false,
                             SenderId = 3,
                             Subject = "Totally Fine Car",
                             Timestamp = new DateTime(2023, 8, 21, 13, 17, 0, 0, DateTimeKind.Unspecified)
@@ -351,9 +339,7 @@ namespace QwikThrift.Migrations
                             Body = "You got to be out your mind! This car is in pristine condition!! How dare you! This is the super-luxury-deluxe model! It even has two rear view mirrors for optimal viewing!",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 3,
-                            SenderDelete = false,
                             SenderId = 2,
                             Subject = "RE:Totally Fine Car",
                             Timestamp = new DateTime(2023, 8, 21, 14, 32, 0, 0, DateTimeKind.Unspecified)
@@ -364,9 +350,7 @@ namespace QwikThrift.Migrations
                             Body = "Why would the passenger need a mirror in the first place?! So they can also see what they’re towing in this rust bucket?! This thing couldn't make it out of the driveway without losing a muffler! What's the deal with those tires? Are they forever melted to the pavement?",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 2,
-                            SenderDelete = false,
                             SenderId = 3,
                             Subject = "RE:Totally Fine Car",
                             Timestamp = new DateTime(2023, 8, 21, 14, 44, 0, 0, DateTimeKind.Unspecified)
@@ -377,9 +361,7 @@ namespace QwikThrift.Migrations
                             Body = "Look, the tires are free if you buy the car! You care about tires anyway! You got perfectly good rims to ride on! You darn city folk and your fancy things like tires wouldn’t know a good car if it bit ya where the sun don’t shine [spit pings off spitoon]. Tell ya what city slicker, you can have it for $1,000 final offer!",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 3,
-                            SenderDelete = false,
                             SenderId = 2,
                             Subject = "RE:Totally Fine Car",
                             Timestamp = new DateTime(2023, 8, 21, 15, 6, 0, 0, DateTimeKind.Unspecified)
@@ -390,9 +372,7 @@ namespace QwikThrift.Migrations
                             Body = "Alright captain, I think I like your style. You didn't have to narrate those cool spit actions, but you went ahead and did anyway, like a boss. I’ll take your deal old man. Meet downtown tomorrow. High noon.",
                             MessageEdited = false,
                             MessageRead = false,
-                            RecipientDelete = false,
                             RecipientId = 2,
-                            SenderDelete = false,
                             SenderId = 3,
                             Subject = "RE:Totally Fine Car",
                             Timestamp = new DateTime(2023, 8, 21, 15, 28, 0, 0, DateTimeKind.Unspecified)
