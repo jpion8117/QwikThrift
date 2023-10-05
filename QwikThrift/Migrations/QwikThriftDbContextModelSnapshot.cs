@@ -185,8 +185,8 @@ namespace QwikThrift.Migrations
                     b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<bool>("SaleStatus")
                         .HasColumnType("bit");
@@ -210,7 +210,7 @@ namespace QwikThrift.Migrations
                             Description = "Runs great! Drives straight down the road (on curved roads). Has minor cosmetic damage to the front-end. Only 1,286,032 miles! $25,600 FIRM, no low-ballers, I KNOW WHAT I HAVE!",
                             ListingTime = new DateTime(2018, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OwnerId = 2,
-                            Price = 23000f,
+                            Price = 23000.0,
                             SaleStatus = false,
                             Title = "Totally Fine Car."
                         },
@@ -221,7 +221,7 @@ namespace QwikThrift.Migrations
                             Description = "I bought this bus a few years back with the intention of making the ultimate camper. The woman I bought it from was kinda crazy and told me it was magic. It does have a deceptively spacious interior! I didn't think anything of her magic claim until I took my first trip about a year later. I pressed the wrong button and ended up in a homeless man's bloodstream. There are some things in this world you just can't unsee! If anyone out there knows how to drive a school bus with magical powers, it's yours for just $5,500. Price is firm, the therapy bills are beginning to add up.",
                             ListingTime = new DateTime(2000, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OwnerId = 3,
-                            Price = 5500f,
+                            Price = 5500.0,
                             SaleStatus = false,
                             Title = "School Bus Camper"
                         },
@@ -232,7 +232,7 @@ namespace QwikThrift.Migrations
                             Description = "Recovered from vehicle wreckage. Rare time-travel device only used 9 times! Like-new condition! Must travel at 88mph to activate, highly recommend a faster car than a DMC Delorian! I considered trying to install it in my new truck I mysteriously acquired, but I don't know much about it and honestly, I've had about enough time traveling mishaps for one lifetime. One of a kind item, not sure what it's worth so make me an offer.",
                             ListingTime = new DateTime(1985, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OwnerId = 2,
-                            Price = 10000f,
+                            Price = 10000.0,
                             SaleStatus = false,
                             Title = "Flux Capacitor"
                         },
@@ -241,9 +241,9 @@ namespace QwikThrift.Migrations
                             ListingId = 4,
                             CategoryId = 2,
                             Description = "Need to sell ASAP, moving far, FAR, VERY FAR away soon. Table is self-clearing, food just flies off on its own! No input needed, just line the floor with plastic and clearing the table after dinner will be a thing of the past. I'd recommend not using any sharp utensils, maybe stick to disposable cutlery. Dining set is self-healing! We caught it on fire once, it burned up completely but was ready for dinner the very next day! My loss is your gain on this antique table and chairs as I moving as soon as my house is done burning which could be anywhere from today to a week from now. Come pick up this lovely dining set free of charge! No really, please! You can have it! Oh God, it knows what we'reeadfdsaf",
-                            ListingTime = new DateTime(2023, 10, 4, 19, 38, 16, 413, DateTimeKind.Local).AddTicks(3955),
+                            ListingTime = new DateTime(2023, 10, 5, 16, 24, 2, 967, DateTimeKind.Local).AddTicks(2393),
                             OwnerId = 4,
-                            Price = 0f,
+                            Price = 0.0,
                             SaleStatus = false,
                             Title = "Victorian Dining Set. Not Haunted."
                         });

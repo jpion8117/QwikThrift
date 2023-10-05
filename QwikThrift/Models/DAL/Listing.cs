@@ -38,7 +38,7 @@ namespace QwikThrift.Models.DAL
         /// <summary>
         /// Sale price of this listing
         /// </summary>
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         /// <summary>
         /// CategoryId of the category this listing belongs to.
