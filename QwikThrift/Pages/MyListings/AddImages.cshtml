@@ -2,3 +2,45 @@
 @model QwikThrift.Pages.MyListings.AddImagesModel
 @{
 }
+@*Display existing images if any are there*@
+<h1>Add Images (optional):</h1>
+@if (Model.Listing.Images.Count > 0)
+{
+    <div>
+        <h2>Click image to remove</h2>
+    </div>
+    <div class="d-flex flex-wrap flex-row w-100">
+        @foreach (var image in Model.Listing.Images)
+        {
+            <form asp-page-handler="RemoveImage" method="post" class="p-2">
+                <button type="submit">
+                    <img style="width:200px" src="@image.FullPath" alt="@image.Description" />
+                </button>
+                <input class="visually-hidden" asp-for="ListingId" />
+                <input class="visually-hidden" asp-for="ImageId" value="@image.ImageReferenceId" />
+            </form>
+        }
+    </div>
+}
+<form id="ImageAddBox" asp-page="/MyListings/AddImages" method="post" enctype="multipart/form-data">
+    <input class="visually-hidden" asp-for="ListingId" />
+    <label asp-for="ImageFiles"></label>
+    <input id="ImageFiles" asp-for="ImageFiles" type="file" accept="images/*" multiple />
+</form>
+<form asp-page-handler="Done" method="post">
+    <input asp-for="ListingId" class="visually-hidden" />
+    <input asp-for="Mode" hidden />
+    <button type="submit">
+        Post Listing
+    </button>
+</form>
+
+@section Scripts
+    {
+    <script>
+        $("#ImageFiles").on("change", function () {
+            console.log("Images added");
+            $("#ImageAddBox").submit();
+        });
+    </script>
+    }

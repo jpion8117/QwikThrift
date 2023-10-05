@@ -13,6 +13,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 
+#nullable disable
+
 namespace QwikThrift.Pages.MyListings
 {
     public class EditModel : PageModel
@@ -36,10 +38,6 @@ namespace QwikThrift.Pages.MyListings
         [BindProperty]
         public string Category { get; set; }
 
-        [BindProperty]
-        public List<IFormFile> FormFiles { get; set; } = new List<IFormFile> { };
-        public Listing Item { get; private set; }
-
         public IActionResult OnGet(int id)
         {
             var userMan = new UserManager(HttpContext.Session, _dbContext);
@@ -50,26 +48,19 @@ namespace QwikThrift.Pages.MyListings
             }
             ViewData["CategoryId"] = new SelectList(_dbContext.Categories, "CategoryId", "CategoryId");
 
-            Item = _dbContext.Listings.FirstOrDefault(item => item.ListingId == id);
+            Listing = _dbContext.Listings.FirstOrDefault(item => item.ListingId == id);
 
-            if (Item == null)
+            if (Listing == null)
             {
                 return NotFound(); // Handle item not found
             }
 
-            Listing = new Listing
-            {
-                Owner = userMan.User,          //Set User Name
-                SaleStatus = false // Set SaleStatus to false
-            };
             Categories = new SelectList(_dbContext.Categories.Select(c => c.CategoryName).Distinct());
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-            List<string> filePaths = new List<string>();
             if (!ModelState.IsValid)
             {
                 // If model validation fails, return to the page with validation errors.
@@ -93,40 +84,10 @@ namespace QwikThrift.Pages.MyListings
             if (category != null)
                 Listing.CategoryId = category.CategoryId;
 
-            _dbContext.Listings.Update(Item);
+            _dbContext.Listings.Update(Listing);
             _dbContext.SaveChanges();
 
-            foreach (var file in FormFiles)
-            {
-                string filename = Listing.Title.Replace(' ', '_') + '_' + Listing.Owner.Username.Replace(' ', '_') + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-                //string path = Path.Combine("images", "listingsInDev", Listing.ListingId.ToString());
-                string path = "\\images\\listingsInDev\\" + Listing.ListingId.ToString() + "\\";
-
-                var imageReference = new ImageReference();
-                
-                imageReference.Name = filename;
-                imageReference.Path = path;
-                imageReference.Description = $"Image from listing \"{Listing.Title}\"";
-                imageReference.Filename = filename;
-                imageReference.ListingId = Listing.ListingId;
-
-                
-                _dbContext.ImageReferences.Add(imageReference);
-
-                string filepath = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
-
-                if (!Directory.Exists(filepath))
-                    Directory.CreateDirectory(filepath);
-
-                using (var filestream = new FileStream(Path.Combine(filepath, filename), FileMode.Create))
-                {
-                    file.CopyTo(filestream);
-                }
-            }
-
-            _dbContext.SaveChanges();
-
-            return RedirectToPage("/MyListings/Index");
+            return RedirectToPage("/MyListings/AddImages", new { id = Listing.ListingId, mode = PageMode.Update.ToString() });
         }
     }
 }

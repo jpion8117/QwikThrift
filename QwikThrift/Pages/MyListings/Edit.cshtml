@@ -10,53 +10,50 @@
     <div class="col-md-12 bg-dark">
         <form asp-action="Edit" class="text-white" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+@*             <div class="form-group">
 
                 <div class="row">
                     
-                    @for (int i = 0; i < Model.Item.Images.Count; i++)
+                    @for (int i = 0; i < Model.Listing.Images.Count; i++)
                     {
-                        <img class="col-sm-2 d-flex mt-2 " src="@Model.Item.Images[i].FullPath" />
+                        <img class="col-sm-2 d-flex mt-2 " src="@Model.Listing.Images[i].FullPath" />
                         <br />
                     }
                     
                 </div>
                 
-                <label asp-for="FormFiles" class="control-label">Upload Images:</label>
-                <input asp-for="FormFiles" type="file" accept="image/*"  class="form-control" />
-                <span asp-validation-for="Item.Images" class="text-danger"></span> 
-                
+            </div> *@
+            <input asp-for="Listing.ListingId" hidden/>
+            <div class="form-group">
+                <label asp-for="Listing.Title" class="control-label"></label>
+                <input asp-for="Listing.Title" class="form-control" value="@Model.Listing.Title"/>
+                <span asp-validation-for="Listing.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Item.Title" class="control-label"></label>
-                <input asp-for="Item.Title" class="form-control" value="@Model.Item.Title"/>
-                <span asp-validation-for="Item.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item.Price" class="control-label"></label>
-                <input asp-for="Item.Price" class="form-control" value="@Model.Item.Price" />
-                <span asp-validation-for="Item.Price" class="text-danger"></span>
+                <label asp-for="Listing.Price" class="control-label"></label>
+                <input asp-for="Listing.Price" class="form-control" value="@Model.Listing.Price" />
+                <span asp-validation-for="Listing.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label><br />
-                <select asp-for="Category" asp-items="Model.Categories" class="col-md-12 p-2">
-                    <option selected="selected" value="@Model.Item.Category.CategoryName">@Model.Item.Category.CategoryName</option>
+                <select asp-for="Category" asp-Listings="Model.Categories" class="col-md-12 p-2">
+                    <option selected="selected" value="@Model.Listing.Category.CategoryName">@Model.Listing.Category.CategoryName</option>
                 </select>
-                <span asp-validation-for="Item.Category" class="text-danger"></span>
+                <span asp-validation-for="Listing.Category" class="text-danger"></span>
             </div>
             <div class="form-group ">
-                <label asp-for="Item.Description" class="control-label"></label>
-                <textarea asp-for="Item.Description" class="form-control text-wrap" style="height:100px;"></textarea>
-                <span asp-validation-for="Item.Description" class="text-danger"></span>
+                <label asp-for="Listing.Description" class="control-label"></label>
+                <textarea asp-for="Listing.Description" class="form-control text-wrap" style="height:100px;"></textarea>
+                <span asp-validation-for="Listing.Description" class="text-danger"></span>
             </div>
             <div class=" text-center">
                 <div class="form-group mt-2 ">
-                    <button type="submit" class="btn btn-primary mt-2">Edit</button>
+                    <button type="submit" class="btn btn-primary mt-2">Next Step</button>
                 </div>
                 <div class=" mt-2">
-                    <button class="btn btn-primary mb-2" asp-page="/MyListings/Index">
+                    <a class="btn btn-primary mb-2" asp-page="/MyListings/Index">
                         Back to My Listings
-                    </button>
+                    </a>
                 </div>
             </div>
         </form>

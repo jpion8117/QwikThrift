@@ -13,6 +13,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 
+#nullable disable
+
 namespace QwikThrift.Pages.MyListings
 {
     public class CreateModel : PageModel
@@ -89,30 +91,7 @@ namespace QwikThrift.Pages.MyListings
             _dbContext.Listings.Add(Listing);
             _dbContext.SaveChanges();
             
-            foreach (var file in FormFiles)
-            {
-                string filename = Listing.Owner.Username.Replace(' ', '_') + '_' + Listing.Title.Replace(' ', '_') + '_' + 
-                    DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-                string path = "\\images\\listingsInDev\\" + Listing.ListingId.ToString() + "\\";
-
-                var imageReference = new ImageReference();
-
-                imageReference.Name = filename;
-                imageReference.Path = path;
-                imageReference.Description = $"Image from listing \"{Listing.Title}\""; 
-                imageReference.Filename = filename;
-                imageReference.ListingId = Listing.ListingId;
-                imageReference.ImageFile = file;
-
-                if (imageReference.SaveImageToFile())
-                    _dbContext.ImageReferences.Add(imageReference);
-                else
-                    throw new Exception("File failed to save to disk.");
-            }
-
-            _dbContext.SaveChanges();
-
-            return RedirectToPage("/MyListings/Index");
+            return RedirectToPage("/MyListings/AddImages", new { id = Listing.ListingId, mode = "Create" });
         }
     }
 }

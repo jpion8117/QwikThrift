@@ -2,7 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QwikThrift.Models;
 using QwikThrift.Models.DAL;
+using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 using System.Reflection;
+
+#nullable disable
 
 namespace QwikThrift.Pages.MyListings
 {
@@ -11,19 +15,26 @@ namespace QwikThrift.Pages.MyListings
         private QwikThriftDbContext _dbContext;
 
         [BindProperty]
+        [Display(Name = "Upload Images")]
         public IFormFileCollection ImageFiles { get; set; } = new FormFileCollection();
 
         [BindProperty]
         public int ListingId {  get; set; }
 
-        public PageMode Mode { get; set; } = PageMode.Create;
+        [BindProperty]
+        public int ImageId { get; set; }
+
+        public Listing Listing { get; set; }
+
+        [BindProperty]
+        public PageMode Mode { get; set; }
 
         public AddImagesModel(QwikThriftDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int id, string mode="Create")
         {
             //check for user logged in
             var userMan = new UserManager(HttpContext.Session, _dbContext);
@@ -32,12 +43,25 @@ namespace QwikThrift.Pages.MyListings
             var user = userMan.User;
             if (user == null) return RedirectToPage("/Users/Login");
 
+            //set mode
+            try
+            {
+                Mode = (PageMode)Enum.Parse(typeof(PageMode), mode);
+            }
+            catch
+            {
+                Mode = PageMode.Create;
+            }
+            
             //lookup listing Id
-            var listing = _dbContext.Listings.FirstOrDefault(l => l.ListingId == id); 
-            ListingId = id;
+            var listing = _dbContext.Listings.FirstOrDefault(l => l.ListingId == id);
 
             //verfy valid listing
             if (listing == null) return NotFound();
+
+            //save listing information to the page model
+            ListingId = id;
+            Listing = listing;
 
             //verify logged in user owns listing
             if (listing.OwnerId != user.UserId) return RedirectToPage("/AccessDenied");
@@ -87,10 +111,10 @@ namespace QwikThrift.Pages.MyListings
             _dbContext.SaveChanges();
 
             //send user back add/edit images page.
-            return RedirectToPagePermanent("/MyListings/AddImages", new { id = listing.ListingId});
+            return RedirectToPagePermanent("/MyListings/AddImages", new { id = listing.ListingId, mode = Mode.ToString() });
         }
 
-        public IActionResult OnPostRemoveImage(int imageId)
+        public IActionResult OnPostRemoveImage()
         {
             //check for user logged in
             var userMan = new UserManager(HttpContext.Session, _dbContext);
@@ -107,7 +131,7 @@ namespace QwikThrift.Pages.MyListings
             if (listing == null) return NotFound();
 
             //get ImageReference
-            var imageRef = _dbContext.ImageReferences.FirstOrDefault(ir => ir.ImageReferenceId == imageId);
+            var imageRef = _dbContext.ImageReferences.FirstOrDefault(ir => ir.ImageReferenceId == ImageId);
             if (imageRef == null) return NotFound();
 
             imageRef.DeleteImageFromFile();
@@ -115,7 +139,7 @@ namespace QwikThrift.Pages.MyListings
             _dbContext.SaveChanges();
 
             //send user back add/edit images page.
-            return RedirectToPagePermanent("/MyListings/AddImages", new { id = listing.ListingId });
+            return RedirectToPagePermanent("/MyListings/AddImages", new { id = listing.ListingId, mode = Mode.ToString() });
         }
 
         public IActionResult OnPostDone()
@@ -125,6 +149,11 @@ namespace QwikThrift.Pages.MyListings
 
             //verfy valid listing
             if (listing == null) return NotFound();
+
+            //update listing status
+            listing.SaleStatus = false;
+            _dbContext.Listings.Update(listing);
+            _dbContext.SaveChanges();
 
             var mode = Mode == PageMode.Create ? "posted" : "edited"; 
 
