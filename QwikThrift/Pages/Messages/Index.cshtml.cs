@@ -146,6 +146,11 @@ namespace QwikThrift.Pages.Messages
                 _dbContext.Remove(message);
                 _dbContext.SaveChanges();
             }
+            else
+            {
+                _dbContext.Update(message);
+                _dbContext.SaveChanges();
+            }
 
             return RedirectToPagePermanent("/Messages/Index", new { mode = Mode, sortMode = SortMode, searchString = SearchString });
         }

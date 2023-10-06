@@ -21,8 +21,8 @@
         }
         @foreach (var message in Model.Messages)
         {
-            <form id="moreDetsForm" asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
-                <div class="list-group-item @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread") text-start" type="submit" style="width:100%!important">
+            <div class="list-group-item row @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread") text-start" type="submit" style="width:100%!important">
+                <form class="col-md-9" id="moreDetsForm" asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
                     <button id="MoreDetsBtn">
                         <div class="fw-bolder">
                             Subject: @message.Subject
@@ -38,23 +38,24 @@
                             @(message.Body != null && message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
                         </div>
                     </button>
-                    <br />
-                    <form id="deleteBtnForm" asp-page-handler="SendToTrash" method="post">
-                        <input asp-for="MessageId" value="@message.MessageId" hidden />
-                        <input asp-for="Mode" hidden />
-                        <input asp-for="SortMode" hidden />
-                        <input asp-for="SearchString" hidden />
-                        <div id="deleteBtn" class="text-end text-muted remove-btn-hover">
-                            remove
-                        </div>
-                    </form>
-                </div>
-            </form>
+                </form>
+                <form class="col-md-1" id="deleteBtnForm" asp-page-handler="SendToTrash" method="post">
+                    <input asp-for="MessageId" value="@message.MessageId" hidden />
+                    <input asp-for="Mode" hidden />
+                    <input asp-for="SortMode" hidden />
+                    <input asp-for="SearchString" hidden />
+                    <button id="deleteBtn" type="submit" class="text-end text-muted remove-btn-hover">
+                        remove
+                    </button>
+                </form>
+            </div>
         }
     </div>
 </div>
 <div class="col-md-2">
     <form asp-page="/Messages/Index" class="row my-2" method="get">
+        <input asp-for="Mode" hidden />
+        <input asp-for="SortMode" hidden />
         <input asp-for="SearchString" class="col-md-8" />
         <button type="submit" class="col-md-4">Search</button>
     </form>
@@ -66,15 +67,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts
-{
-    <script>
-        $("#deleteBtn").on("click", function () {
-            $("#deleteBtnForm").submit();
-        });
-        $("#moreDetsBtn").on("click", function () {
-            $("#moreDetsForm").submit();
-        });
-    </script>
-}
