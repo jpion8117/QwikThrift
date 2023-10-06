@@ -20,3 +20,12 @@
     </div>
     @RenderBody()
 </div>
+
+@section Scripts
+{
+    @await RenderSectionAsync("Scripts", required: false)
+}
+@section AppendToHead
+{
+    @RenderSection("AppendToHead", false)
+}

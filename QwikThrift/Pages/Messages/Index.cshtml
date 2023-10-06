@@ -3,6 +3,14 @@
 @{
     Layout = "_MessageLayout";
 }
+@section AppendToHead
+{
+    <style>
+        .remove-btn-hover:hover{
+            color: red;
+        }
+    </style>
+}
 <div class="col-md-8">
     <div class="list-group d-flex flex-column align-items-stretch">
         @if (Model.Messages.Count == 0)
@@ -13,26 +21,34 @@
         }
         @foreach (var message in Model.Messages)
         {
-            <form asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
-                <button class="list-group-item @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread") text-start" type="submit" style="width:100%!important">
-                    <div class="fw-bolder">
-                        Subject: @message.Subject
-                    </div>
-                    <div class="fw-bold">
-                        From: @message.Sender.Username
-                    </div>
-                    <div class="fw-bold">
-                        Date: @message.Timestamp.ToLongDateString() @message.Timestamp.ToShortTimeString()
-                    </div>
+            <form id="moreDetsForm" asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
+                <div class="list-group-item @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread") text-start" type="submit" style="width:100%!important">
+                    <button id="MoreDetsBtn">
+                        <div class="fw-bolder">
+                            Subject: @message.Subject
+                        </div>
+                        <div class="fw-bold">
+                            From: @message.Sender.Username
+                        </div>
+                        <div class="fw-bold">
+                            Date: @message.Timestamp.ToLongDateString() @message.Timestamp.ToShortTimeString()
+                        </div>
+                        <br />
+                        <div class="text-sm-start text-wrap">
+                            @(message.Body != null && message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
+                        </div>
+                    </button>
                     <br />
-                    <div class="text-sm-start text-wrap">
-                        @(message.Body != null && message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
-                    </div>
-                    <br />
-                    <div class="text-sm-end text-muted @(ViewBag.Mode == "inbox" ? "" : "visually-hidden")">
-                        remove
-                    </div>
-                </button>
+                    <form id="deleteBtnForm" asp-page-handler="SendToTrash" method="post">
+                        <input asp-for="MessageId" value="@message.MessageId" hidden />
+                        <input asp-for="Mode" hidden />
+                        <input asp-for="SortMode" hidden />
+                        <input asp-for="SearchString" hidden />
+                        <div id="deleteBtn" class="text-end text-muted remove-btn-hover">
+                            remove
+                        </div>
+                    </form>
+                </div>
             </form>
         }
     </div>
@@ -50,3 +66,15 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        $("#deleteBtn").on("click", function () {
+            $("#deleteBtnForm").submit();
+        });
+        $("#moreDetsBtn").on("click", function () {
+            $("#moreDetsForm").submit();
+        });
+    </script>
+}
