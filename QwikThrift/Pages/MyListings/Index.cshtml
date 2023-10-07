@@ -42,7 +42,7 @@
                         
                         
                         <div class="text-center" style="padding-top:15px;">
-                            <a class="btn btn-primary" asp-page="/MyListings/Details" asp-route-id="@listing.ListingId">
+                            <a class="btn btn-primary nav-link text-white mx-auto" asp-page="/MyListings/Details" asp-route-id="@listing.ListingId">
                                 Details
                             </a>
                         </div>
@@ -58,7 +58,7 @@
     </div>
     <div class="col-md-4">
         <form method="get">
-            <p class="text-white">
+            <div class="text-white">
                 <button type="submit" class="btn btn-primary col-12">Filter My Listings</button>
                 <hr/>
 
@@ -74,10 +74,10 @@
                 <button type="submit" name="SortOrder" value="ListingTimeAsc" class="btn btn-primary">Sort By Listing Time (Asc)</button>
                 <button type="submit" name="SortOrder" value="ListingTimeDesc" class="btn btn-primary mt-2">Sort By Listing Time (Desc)</button>
                 <hr/>
-
-            </p>
-            <button class="btn btn-primary col-2" asp-page="/MyListings/Create">
-                    Create New Listing
+            </div>
+            
+            <button class="btn btn-primary col-2" asp-page="./Create">
+                   Create New Listing
             </button>
             
         </form>
