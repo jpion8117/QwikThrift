@@ -136,8 +136,11 @@ namespace QwikThrift.Pages.Messages
 
             //determine if this is sender or recipient deleting the message
             if (Mode == "inbox")
+            {
                 message.RecipientDelete = true;
-            else 
+                message.MessageRead = true;
+            }
+            else
                 message.SenderDelete = true;
 
             //if both sender and recipient have deleted message, delete it from the database

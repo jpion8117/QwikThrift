@@ -21,33 +21,42 @@
         }
         @foreach (var message in Model.Messages)
         {
-            <div class="list-group-item row @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread") text-start" type="submit" style="width:100%!important">
-                <form class="col-md-9" id="moreDetsForm" asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
-                    <button id="MoreDetsBtn">
-                        <div class="fw-bolder">
-                            Subject: @message.Subject
-                        </div>
-                        <div class="fw-bold">
-                            From: @message.Sender.Username
-                        </div>
-                        <div class="fw-bold">
-                            Date: @message.Timestamp.ToLongDateString() @message.Timestamp.ToShortTimeString()
-                        </div>
-                        <br />
-                        <div class="text-sm-start text-wrap">
-                            @(message.Body != null && message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
-                        </div>
-                    </button>
-                </form>
-                <form class="col-md-1" id="deleteBtnForm" asp-page-handler="SendToTrash" method="post">
-                    <input asp-for="MessageId" value="@message.MessageId" hidden />
-                    <input asp-for="Mode" hidden />
-                    <input asp-for="SortMode" hidden />
-                    <input asp-for="SearchString" hidden />
-                    <button id="deleteBtn" type="submit" class="text-end text-muted remove-btn-hover">
-                        remove
-                    </button>
-                </form>
+            <div class="row text-start">
+                <div class="col-md-11">
+                    <form id="moreDetsForm" asp-page="/Messages/View" asp-route-id="@message.MessageId" asp-route-mode="@ViewBag.Mode" method="post">
+                        <button id="MoreDetsBtn" class="mx-0 w-100 @(message.MessageRead && ViewBag.Mode == "inbox" ? "message-read" : "message-unread") ">
+                            <div class="fw-bolder">
+                                Subject: @message.Subject
+                            </div>
+                            <div class="fw-bold">
+                                From: @message.Sender.Username
+                            </div>
+                            <div class="fw-bold">
+                                Date: @message.Timestamp.ToLongDateString() @message.Timestamp.ToShortTimeString()
+                            </div>
+                            <br />
+                            <div class="text-sm-start text-wrap">
+                                @(message.Body != null && message.Body.Length >= 100 ? message.Body.Substring(0, 100) + "..." : message.Body)
+                            </div>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-1 d-flex flex-column flex-fill">
+                    <form class="flex-fill d-flex" id="deleteBtnForm" asp-page-handler="SendToTrash" method="post">
+                        <input asp-for="MessageId" value="@message.MessageId" hidden />
+                        <input asp-for="Mode" hidden />
+                        <input asp-for="SortMode" hidden />
+                        <input asp-for="SearchString" hidden />
+                        <button id="deleteBtn" type="submit" class="bg-danger flex-fill text-light text-center remove-btn-hover">
+                            <span class="fa-solid fa-trash"></span>
+                        </button>
+                    </form>
+                    <a asp-page="/Messages/Edit" asp-route-messageId="@message.MessageId" class="text-center flex-fill text-light bg-info @(Model.Mode == "outbox" ? "" : "visually-hidden" )">
+                        <p class="my-auto">
+                            <span class="fa-solid fa-file-pen text-center"></span>
+                        </p>
+                    </a>
+                </div>
             </div>
         }
     </div>
