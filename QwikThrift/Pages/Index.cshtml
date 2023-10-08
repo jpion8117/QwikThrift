@@ -6,55 +6,70 @@
 
 <div class="row">
     <div class="col-md-8 data-view">
-    <div class="container-fluid">
-        @if (Model.LastFiveListings != null && Model.LastFiveListings.Any())
-        {
-            @foreach (var listing in Model.LastFiveListings)
+        <div class="container-fluid">
+            @if (Model.LastFiveListings != null && Model.LastFiveListings.Any())
             {
                 <div class="row listing">
+                    <div id="listinImages" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @for (int i = 0; i < Model.LastFiveListings.Count; i++)
+                            {
+                                <li data-target="#listinImages" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+                            }
+                        </ol>
+                        <div class="carousel-inner ">
+                            @for (int i = 0; i < Model.LastFiveListings.Count; i++)
+                            {
+                                var listing = Model.LastFiveListings[i]; // Get the current listing
 
+                                <div class=" carousel-item @(i == 0 ? "active" : "")">
+                                    <div class="row ps-5">
+                                        <div class="form-group col-4 ps-3">
+                                            <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
+                                        </div>
 
-                    <div class="form-group col-4">
-                        <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
-                    </div>
+                                        <div class="col-6">
+                                            <div class="form-group col-8">
+                                                <label>Title:</label>
+                                                <p>@listing.Title</p>
+                                            </div>
+                                            <div class="form-group col-8">
+                                                <label>Price:</label>
+                                                <p>@listing.Price.ToString("C")</p>
+                                            </div>
+                                            <div class="form-group col-8">
+                                                <label>Category:</label>
+                                                <p>@listing.Category.CategoryName</p>
+                                            </div>
+                                        </div>
 
-
-                    <div class="col-6">
-                        <div class="form-group col-8">
-                            <label>Title:</label>
-                            <p>@listing.Title</p>
+                                        <div class="text-center" style="padding-top:15px;">
+                                            <a class="btn btn-primary mb-2" asp-page="/Details" asp-route-id="@listing.ListingId">
+                                                Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
-                        <div class="form-group col-8">
-                            <label>Price:</label>
-                            <p>@listing.Price.ToString("C")</p>
-                        </div>
-                        <div class="form-group col-8">
-                            <label>Category:</label>
-                            <p>@listing.Category.CategoryName</p>
-                        </div>
-                    </div>
-
-                    <div class="text-center" style="padding-top:15px;">
-                        <a class="btn btn-primary" asp-page="/Details" asp-route-id="@listing.ListingId">
-                            Details
+                        <a class="carousel-control-prev" href="#listinImages" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#listinImages" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         </a>
                     </div>
                 </div>
-                
 
-                <hr />
             }
-        }
-        else
-        {
-            <p>You have no listings.</p>
-        }
+            else
+            {
+                <p>No Listings to show...</p>
+            }
         </div>
-
     </div>
     <div class="col-md-4 order-1 text-center">
         <h1> Welcome to Qwik Thrift!</h1>
-        <p class=" p-1 text-white text-center">Shop and save on local used goods in your area!</p>
+        <p class="p-1 text-white text-center">Shop and save on local used goods in your area!</p>
     </div>
 </div>
-
