@@ -24,8 +24,8 @@ namespace QwikThrift.Pages
 
             // Retrieve the last 5 listings from the database
             LastFiveListings = _dbContext.Listings
-                .OrderByDescending(listing => listing.ListingTime)
-                .Take(3)
+                .OrderByDescending(listing => listing.ListingId)
+                .Take(5)
                 .ToList();
         }
     }

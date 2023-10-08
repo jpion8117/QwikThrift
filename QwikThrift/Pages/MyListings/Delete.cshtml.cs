@@ -13,6 +13,7 @@ using QwikThrift.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Hosting;
 
 namespace QwikThrift.Pages.MyListings
 {
@@ -22,9 +23,11 @@ namespace QwikThrift.Pages.MyListings
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public DeleteModel(QwikThrift.Models.DAL.QwikThriftDbContext context)
+        public DeleteModel(QwikThrift.Models.DAL.QwikThriftDbContext context, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [BindProperty]
@@ -56,39 +59,29 @@ namespace QwikThrift.Pages.MyListings
             {
                 return NotFound();
             }
+
+            int listingIdToDeleteFilesFor = Listing.ListingId;
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            var listingToDelete = _context.Listings.FirstOrDefault(m => m.ListingId == id);
+            if (listingToDelete != null)
+            {
+                listingToDelete.DeleteAssociatedImages();
+                foreach(var image in listingToDelete.Images)
+                {
+                    _context.ImageReferences.Remove(image);
+                }
+            }
+                
             var listing = await _context.Listings.FindAsync(id);
 
             if (listing != null)
             {
                 Listing = listing;
                 _context.Listings.Remove(Listing);
+                NotificationBanner.SetBanner("Listing deleted successfully!", "bg-success text-white text-center");
                 await _context.SaveChangesAsync();
             }
 
-    
-            int listingIdToDeleteFilesFor = Listing.ListingId; 
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-          
-            var imageReferencesToDelete = _context.ImageReferences
-                .Where(ir => ir.ListingId == listingIdToDeleteFilesFor)
-                .ToList();
-
-            foreach (var imageReference in imageReferencesToDelete)
-            {
-                string filePathToDelete = Path.Combine(wwwRootPath, imageReference.Path, imageReference.Name);
-
-                // Create a FileInfo object
-                FileInfo fileInfo = new FileInfo(filePathToDelete);
-
-                // Check if the file exists and delete it
-                if (fileInfo.Exists)
-                {
-                    fileInfo.Delete();
-                }
-
-                // Remove the ImageReference entity from the database context
-                _context.ImageReferences.Remove(imageReference);
-            }
 
             return RedirectToPage("./Index");
         }

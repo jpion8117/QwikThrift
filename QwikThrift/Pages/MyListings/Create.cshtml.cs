@@ -13,6 +13,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 
+#nullable disable
+
 namespace QwikThrift.Pages.MyListings
 {
     public class CreateModel : PageModel
@@ -88,37 +90,9 @@ namespace QwikThrift.Pages.MyListings
 
             _dbContext.Listings.Add(Listing);
             _dbContext.SaveChanges();
-            
-            foreach (var file in FormFiles)
-            {
-                string filename = Listing.Title.Replace(' ', '_') + '_' + Listing.Owner.Username.Replace(' ', '_') + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-                //string path = Path.Combine("images", "listingsInDev", Listing.ListingId.ToString());
-                string path = "\\images\\listingsInDev\\" + Listing.ListingId.ToString() + "\\";
 
-                var imageReference = new ImageReference();
 
-                imageReference.Name = filename;
-                imageReference.Path = path;
-                imageReference.Description = $"Image from listing \"{Listing.Title}\""; 
-                imageReference.Filename = filename;
-                imageReference.ListingId = Listing.ListingId;
-
-                _dbContext.ImageReferences.Add(imageReference);
-
-                string filepath = Path.Combine(wwwRootPath, "images", "listingsInDev", Listing.ListingId.ToString());
-
-                if (!Directory.Exists(filepath))
-                    Directory.CreateDirectory(filepath);
-
-                using (var filestream = new FileStream(Path.Combine(filepath, filename), FileMode.Create))
-                {
-                    file.CopyTo(filestream);
-                }
-            }
-
-            _dbContext.SaveChanges();
-
-            return RedirectToPage("/MyListings/Index");
+            return RedirectToPage("/MyListings/AddImages", new { id = Listing.ListingId, mode = "Create" });
         }
     }
 }

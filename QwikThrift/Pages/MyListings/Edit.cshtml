@@ -1,5 +1,5 @@
 ﻿@page "{id:int}"
-@model QwikThrift.Pages.MyListings.CreateModel
+@model QwikThrift.Pages.MyListings.EditModel
 @{
     ViewBag.Title = $"Edit";
 }
@@ -7,27 +7,38 @@
 <h1>Edit Listing</h1>
 
 <div class="row ">
-    <div class="col-md-12 ">
-        <form asp-action="Create" class="text-white" method="post" enctype="multipart/form-data">
+    <div class="col-md-12 bg-dark">
+        <form asp-action="Edit" class="text-white" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FormFiles" class="control-label">Upload Images:</label>
-                <input asp-for="FormFiles" type="file" accept="image/*" multiple class="form-control" />
-                <span asp-validation-for="Listing.Images" class="text-danger"></span>
-            </div>
+@*             <div class="form-group">
+
+                <div class="row">
+                    
+                    @for (int i = 0; i < Model.Listing.Images.Count; i++)
+                    {
+                        <img class="col-sm-2 d-flex mt-2 " src="@Model.Listing.Images[i].FullPath" />
+                        <br />
+                    }
+                    
+                </div>
+                
+            </div> *@
+            <input asp-for="Listing.ListingId" hidden/>
             <div class="form-group">
                 <label asp-for="Listing.Title" class="control-label"></label>
-                <input asp-for="Listing.Title" class="form-control" />
+                <input asp-for="Listing.Title" class="form-control" value="@Model.Listing.Title"/>
                 <span asp-validation-for="Listing.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Listing.Price" class="control-label"></label>
-                <input asp-for="Listing.Price" class="form-control" />
+                <input asp-for="Listing.Price" class="form-control" value="@Model.Listing.Price" />
                 <span asp-validation-for="Listing.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label><br />
-                <select asp-for="Category" asp-items="Model.Categories" class="col-md-12 p-2"></select>
+                <select asp-for="Category" asp-items="Model.Categories" class="col-md-12 p-2">
+                    <option selected="selected" value="@Model.Listing.Category.CategoryName">@Model.Listing.Category.CategoryName</option>
+                </select>
                 <span asp-validation-for="Listing.Category" class="text-danger"></span>
             </div>
             <div class="form-group ">
@@ -35,17 +46,18 @@
                 <textarea asp-for="Listing.Description" class="form-control text-wrap" style="height:100px;"></textarea>
                 <span asp-validation-for="Listing.Description" class="text-danger"></span>
             </div>
-            <div class="text-center">
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary mt-2" />
+            <div class=" text-center">
+                <div class="form-group mt-2 ">
+                    <button type="submit" class="btn btn-primary mt-2">Next Step</button>
                 </div>
-                <div class=" mt-1">
-                    <a class="btn btn-primary" asp-page="/MyListings/Index">
+                <div class=" mt-2">
+                    <a class="btn btn-primary mb-2 " asp-page="/MyListings/Index">
                         Back to My Listings
                     </a>
                 </div>
             </div>
         </form>
+        
     </div>
 
 

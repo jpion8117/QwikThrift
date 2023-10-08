@@ -17,14 +17,27 @@ namespace QwikThrift.Pages.Messages
         [BindProperty]
         public string SearchString { get; set; }
 
+        [BindProperty]
+        public string SortMode { get; set; }
+
+        [BindProperty]
+        public string Mode { get; set; }
+
+        [BindProperty]
+        public int MessageId { get; set; }
+
         public IndexModel(QwikThriftDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public IActionResult OnGet(string mode = "inbox", string sortMode = "", string SearchString = "")
+        public IActionResult OnGet(string mode = "inbox", string sortMode = "", string searchString = "")
         {
             var userMan = new UserManager(HttpContext.Session, _dbContext);
             ViewData["Mode"] = mode;
+
+            Mode = mode;
+            SearchString = searchString;
+            SortMode = sortMode;
 
             //redirect user to login page if user is not logged in.
             if (!userMan.UserLoggedIn)
@@ -42,11 +55,11 @@ namespace QwikThrift.Pages.Messages
             switch (mode)
             {
                 case "inbox":
-                    messageQuery = _dbContext.Messages.Where(m => m.RecipientId == user.UserId);
+                    messageQuery = _dbContext.Messages.Where(m => m.RecipientId == user.UserId && !m.RecipientDelete);
                     break;
 
                 case "outbox":
-                    messageQuery = _dbContext.Messages.Where(m => m.SenderId == user.UserId);
+                    messageQuery = _dbContext.Messages.Where(m => m.SenderId == user.UserId && !m.SenderDelete);
                     break;
 
                 default:
@@ -69,37 +82,37 @@ namespace QwikThrift.Pages.Messages
                 }
 
                 //apply search rules
-                if (!SearchString.IsNullOrEmpty())
+                if (!searchString.IsNullOrEmpty())
                 {
                     //make search string lower-case
-                    SearchString = SearchString.ToLower();
+                    searchString = searchString.ToLower();
 
                     //extract subject string and filter
-                    if (SearchString.Contains("subject=\""))
+                    if (searchString.Contains("subject=\""))
                     {
-                        string subjectStart = SearchString.Substring(SearchString.IndexOf("subject=\"") + 9);
+                        string subjectStart = searchString.Substring(searchString.IndexOf("subject=\"") + 9);
                         string subject = subjectStart.Substring(0, subjectStart.IndexOf('\"'));
                         string subjectTagString = "subject=\"" + subject + "\"";
 
                         messageQuery = messageQuery.Where(m => m.Subject.Contains(subject));
-                        SearchString = SearchString.Remove(SearchString.IndexOf(subjectTagString), subjectTagString.Length);
+                        searchString = searchString.Remove(searchString.IndexOf(subjectTagString), subjectTagString.Length);
                     }
 
                     //extract sender string and filter
-                    if (SearchString.Contains("sender=\""))
+                    if (searchString.Contains("sender=\""))
                     {
-                        string senderStart = SearchString.Substring(SearchString.IndexOf("sender=\"") + 8);
+                        string senderStart = searchString.Substring(searchString.IndexOf("sender=\"") + 8);
                         string sender = senderStart.Substring(0, senderStart.IndexOf('\"'));
                         string senderTagString = "sender=\"" + sender + "\"";
 
                         messageQuery = messageQuery.Where(m => m.Sender.Username.Contains(sender));
-                        SearchString = SearchString.Remove(SearchString.IndexOf(senderTagString), senderTagString.Length);
+                        searchString = searchString.Remove(searchString.IndexOf(senderTagString), senderTagString.Length);
                     }
 
                     //search remaining string on body
-                    if (!SearchString.IsNullOrEmpty())
+                    if (!searchString.IsNullOrEmpty())
                     {
-                        var bodyWords = SearchString.Split(' ');
+                        var bodyWords = searchString.Split(' ');
                         foreach (var word in bodyWords)
                         { 
                             messageQuery = messageQuery.Where(m => m.Body.Contains(word));
@@ -113,6 +126,36 @@ namespace QwikThrift.Pages.Messages
                 return NotFound();
 
             return Page();
+        }
+
+        public IActionResult OnPostSendToTrash()
+        {
+            //find message
+            var message = _dbContext.Messages.Find(MessageId);
+            if (message == null) return NotFound();
+
+            //determine if this is sender or recipient deleting the message
+            if (Mode == "inbox")
+            {
+                message.RecipientDelete = true;
+                message.MessageRead = true;
+            }
+            else
+                message.SenderDelete = true;
+
+            //if both sender and recipient have deleted message, delete it from the database
+            if (message.SenderDelete && message.RecipientDelete)
+            {
+                _dbContext.Remove(message);
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                _dbContext.Update(message);
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToPagePermanent("/Messages/Index", new { mode = Mode, sortMode = SortMode, searchString = SearchString });
         }
     }
 }

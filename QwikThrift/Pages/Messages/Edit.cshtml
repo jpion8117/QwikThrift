@@ -1,0 +1,38 @@
+﻿@page
+@model QwikThrift.Pages.Messages.EditModel
+@{
+}
+<form asp-page="/Messages/Edit" method="post">
+    <div class="text-center text-danger fs-4 m-2">
+        *** Please note, the recipient of your message will be notified when a message is edited ***
+    </div>
+    <div class="row">
+        <label asp-for="Message.Subject" class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></label>
+        <input asp-for="Message.Subject" class="col-xxl-9" readonly />
+    </div>
+    <div class="row my-2">
+        <label asp-for="Message.Recipient.Username" class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder">Recipient</label>
+        <input asp-for="Message.Recipient.Username" class="col-xxl-9" readonly />
+    </div>
+    <div class="row my-2">
+        <div class="col-xxl-1 text-white text-xxl-end text-uppercase fw-bolder"></div>
+        <textarea asp-for="Message.Body" class="col-xxl-9" style="min-height:200px"></textarea>
+    </div>
+    <div class="row">
+        <div class="col-xxl-1"></div>
+        <div class="col-xxl-9 d-flex flex-row justify-content-center">
+            <button type="submit" class="btn btn-primary">Edit</button>
+            <a class="btn btn-secondary ms-2" href="@(string.IsNullOrEmpty(Model.ReturnUrl) ? Url.Page("/Index") : Model.ReturnUrl)">
+                Cancel
+            </a>
+        </div>
+    </div>
+    <input asp-for="Message.RecipientId" hidden />
+    <input asp-for="Message.MessageId" hidden />
+    <input asp-for="Message.MessageEdited" hidden />
+    <input asp-for="Message.Timestamp" hidden />
+    <input asp-for="Message.RecipientDelete" hidden />
+    <input asp-for="Message.SenderDelete" hidden />
+    <input asp-for="Message.SenderId" class="visually-hidden" />
+    <input asp-for="ReturnUrl" class="visually-hidden" />
+</form>

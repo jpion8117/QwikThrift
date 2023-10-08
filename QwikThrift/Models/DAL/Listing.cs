@@ -38,7 +38,7 @@ namespace QwikThrift.Models.DAL
         /// <summary>
         /// Sale price of this listing
         /// </summary>
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         /// <summary>
         /// CategoryId of the category this listing belongs to.
@@ -57,7 +57,13 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         public void DeleteAssociatedImages()
         {
-            //coming soon.
+            foreach (ImageReference image in Images)
+                image.DeleteImageFromFile();
+
+            var path = Path.Combine(ImageReference.HostPath, "listingsInDev", ListingId.ToString());
+
+            if (Directory.Exists(path))
+                Directory.Delete(path);
         }
     }
 }

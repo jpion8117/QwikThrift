@@ -24,7 +24,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-ImageReference.HostPath = Path.Combine(app.Environment.WebRootPath, "images");
+ImageReference.HostPath = app.Environment.WebRootPath;
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
