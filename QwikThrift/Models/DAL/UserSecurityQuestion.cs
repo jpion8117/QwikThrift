@@ -36,7 +36,7 @@ namespace QwikThrift.Models.DAL
             {
                 _answer = value;
                 AnswerSalt = User.GenerateSalt();
-                AnswerHash = new PasswordHasher(AnswerSalt + value).PasswordHash;            
+                AnswerHash = new PasswordHasher(AnswerSalt + value.ToLower()).PasswordHash;            
             }
         }
 
@@ -47,7 +47,7 @@ namespace QwikThrift.Models.DAL
         public bool VerifyAnswer(string answer)
         {
             var answerHash
-                = new PasswordHasher(AnswerSalt + answer).PasswordHash;
+                = new PasswordHasher(AnswerSalt + answer.ToLower()).PasswordHash;
             return answerHash == AnswerHash;
         }
     }
