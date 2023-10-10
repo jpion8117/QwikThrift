@@ -35,10 +35,16 @@ namespace QwikThrift.Models.DAL
             get => _password; 
             set
             {
+                //generate a password salt to add to the hash
+                PasswordSalt = User.GenerateSalt();
+
+                //store the password in memory (will be discarded upon object deletion)
                 _password = value;
 
-                var passHash = new PasswordHasher(value);
+                //create the pasword hasher object
+                var passHash = new PasswordHasher(PasswordSalt + value);
 
+                //save the newly salted and hashed password
                 _passwordHash = passHash.PasswordHash;
             }
         }
@@ -52,6 +58,11 @@ namespace QwikThrift.Models.DAL
             get => _passwordHash; 
             set => _passwordHash = value; 
         }
+
+        /// <summary>
+        /// Salt used to secure password hash.
+        /// </summary>
+        public string PasswordSalt { get; set; } = string.Empty;
 
         /// <summary>
         /// User's email address
@@ -70,6 +81,25 @@ namespace QwikThrift.Models.DAL
         virtual public List<Listing> Listings { get; set; }
 
         /// <summary>
+        /// Generate a random 256 character string to salt a password hash. What is wrong with 
+        /// programmers and the way we name things! Seriously, the reason we "salt and hash" a
+        /// password is to protect against something called a "rainbow table" Lol...
+        /// </summary>
+        /// <returns>Salt string</returns>
+        public static string GenerateSalt()
+        {
+            var salt = string.Empty;
+            var rand = new Random();
+
+            for (var i = 0; i < 256; i++) 
+            {
+                salt += (char)rand.Next(35, 126);
+            }
+
+            return salt;
+        }
+
+        /// <summary>
         /// Check if user is a member of a given role
         /// </summary>
         /// <param name="role">Role to check for</param>
@@ -85,9 +115,9 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         /// <param name="passwordProvided">Password the user entered at the frontend.</param>
         /// <returns>True if password provided matches</returns>
-        public bool verifyLogin(string passwordProvided)
+        public bool VerifyLogin(string passwordProvided)
         {
-            var passHasher = new PasswordHasher(passwordProvided);
+            var passHasher = new PasswordHasher(PasswordSalt + passwordProvided);
 
             return passHasher.Validate(PasswordHash);
         }

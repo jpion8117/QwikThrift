@@ -1,0 +1,50 @@
+﻿@page
+@model QwikThrift.Pages.Users.NewModel
+
+@{
+    ViewData["Title"] = "NewUser";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>NewUser</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NewUser.Username" class="control-label"></label>
+                <input asp-for="NewUser.Username" class="form-control" />
+                <span asp-validation-for="NewUser.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewUser.Email" class="control-label"></label>
+                <input asp-for="NewUser.Email" class="form-control" />
+                <span asp-validation-for="NewUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewUser.Password" class="control-label"></label>
+                <input asp-for="NewUser.Password" class="form-control" />
+                <span asp-validation-for="NewUser.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewUser.ConfirmPassword" class="control-label"></label>
+                <input asp-for="NewUser.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="NewUser.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

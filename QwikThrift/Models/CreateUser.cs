@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using QwikThrift.Models.DAL;
 using System.ComponentModel.DataAnnotations;
 
 namespace QwikThrift.Models
@@ -14,5 +15,9 @@ namespace QwikThrift.Models
         [Required(ErrorMessage = "Please confirm your password...")]
         [Compare("Password", ErrorMessage = "Passwords do not match. Please try again...")]
         public string ConfirmPassword { get; set; }
+
+        public UserSecurityQuestion Question1 { get; set; }
+        public UserSecurityQuestion Question2 { get; set; }
+        public UserSecurityQuestion Question3 { get; set; }
     }
 }

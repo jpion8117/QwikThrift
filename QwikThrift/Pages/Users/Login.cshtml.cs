@@ -52,7 +52,7 @@ namespace QwikThrift.Pages.Users
                 //locate user account
                 var user = _dbContext.Users.FirstOrDefault(u => u.Username == Username);
 
-                if (user == null || !user.verifyLogin(Password))
+                if (user == null || !user.VerifyLogin(Password))
                 {
                     ModelState.AddModelError("Username", "Invalid username or password...");
                     return Page();
