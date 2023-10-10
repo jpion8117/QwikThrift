@@ -30,6 +30,11 @@ namespace QwikThrift.Models.DAL
         /// </summary>
         public DbSet<Category> Categories { get; set; }
 
+        /// <summary>
+        /// User security questions
+        /// </summary>
+        public DbSet<UserSecurityQuestion> SecurityQuestions { get; set; }
+
         public QwikThriftDbContext(DbContextOptions<QwikThriftDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

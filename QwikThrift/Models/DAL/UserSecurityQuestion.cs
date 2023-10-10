@@ -9,6 +9,7 @@ namespace QwikThrift.Models.DAL
     {
         private string _answer;
 
+        [NotMapped]
         public SelectList Questions { get; set; } = new SelectList(new List<string> 
         {
             "In what city were you born?",
@@ -24,7 +25,7 @@ namespace QwikThrift.Models.DAL
         public int Id { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public string Question { get; set; }
 
