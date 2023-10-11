@@ -55,15 +55,15 @@ namespace QwikThrift.Pages.MyListings
 
             switch (SortOrder)
             {
-                case "ListingTimeAsc":
-                    query = query.OrderBy(listing => listing.ListingTime);
+                case "ListingPriceAsc":
+                    query = query.OrderBy(listing => listing.Price);
                     break;
-                case "ListingTimeDesc":
-                    query = query.OrderByDescending(listing => listing.ListingTime);
+                case "ListingPriceDesc":
+                    query = query.OrderByDescending(listing => listing.Price);
                     break;
 
                 default:
-                    query = query.OrderByDescending(listing => listing.ListingTime);
+                    query = query.OrderByDescending(listing => listing.Price);
                     break;
             }
 
