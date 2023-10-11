@@ -54,7 +54,7 @@ namespace QwikThrift.Pages.Browse
             _context.Categories.Add(Category);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
     }
 }

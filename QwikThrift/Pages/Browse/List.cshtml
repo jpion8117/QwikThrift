@@ -7,9 +7,9 @@
 
 <h1>List</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+<div class="btn btn-primary">
+    <a class="text-white" asp-page="Create">Create New</a>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.AuthorizedBy.Email)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
+                <a class="text-white" asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                <a class="text-white" asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
+                <a class="text-white" asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
             </td>
         </tr>
 }
