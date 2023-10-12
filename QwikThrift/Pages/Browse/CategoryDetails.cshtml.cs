@@ -13,7 +13,7 @@ namespace QwikThrift.Pages.Browse
         {
             _dbContext = dataRepository;
         }
-        public Category Item { get; private set; }
+        public Models.DAL.Category Item { get; private set; }
         public IActionResult OnGet(int id)
         {
             // Retrieve the item based on the given Id from data repository
