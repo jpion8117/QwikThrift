@@ -1,5 +1,5 @@
 ﻿@page "{id:int}"
-@model DetailsModel
+@model CategoryDetailsModel
 @{
     ViewData["Title"] = "Details";
 }
@@ -10,26 +10,17 @@
     <div class="col-md-8 data-view">
         <form method="post">
             @Html.AntiForgeryToken()
-
-            <div class="form-group m-1">
-                <img class="col-12" src="@(Model.Item.Images.Count > 0 ? Model.Item.Images[0].FullPath : "")" alt="Listing Image" />
-            </div>
             <div class="form-group m-1">
                 <label class="fw-bolder">Price:</label>
-                <span>@Model.Item.Price.ToString("C")</span>
+                <span>@Model.Item.CategoryName</span>
             </div>
             <div class="form-group m-1">
                 <label class="fw-bolder">Title:</label>
-                <span>@Model.Item.Title</span>
+                <span>@Model.Item.CategoryDescription</span>
             </div>
             <div class="form-group m-1">
                 <label class="fw-bolder">Category:</label>
-                <span>@Model.Item.Category.CategoryName</span>
-            </div>
-            <div class="form-group m-1">
-                <label class="fw-bolder">Description:</label>
-                <br />
-                <span>@Model.Item.Description</span>
+                <span>@Model.Item.AuthorizedBy.Email</span>
             </div>
         </form>
     </div>
