@@ -13,13 +13,13 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 
-namespace QwikThrift.Pages.Browse
+namespace QwikThrift.Pages.Category
 {
     public class CreateModel : PageModel
     {
-        private readonly QwikThrift.Models.DAL.QwikThriftDbContext _context;
+        private readonly QwikThriftDbContext _context;
 
-        public CreateModel(QwikThrift.Models.DAL.QwikThriftDbContext context)
+        public CreateModel(QwikThriftDbContext context)
         {
             _context = context;
         }
@@ -40,13 +40,13 @@ namespace QwikThrift.Pages.Browse
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
-        
+        public Models.DAL.Category Category { get; set; } = default!;
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Categories == null || Category == null)
+            if (!ModelState.IsValid || _context.Categories == null || Category == null)
             {
                 return Page();
             }

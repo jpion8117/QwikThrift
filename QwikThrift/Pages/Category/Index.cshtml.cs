@@ -7,18 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QwikThrift.Models.DAL;
 
-namespace QwikThrift.Pages.Browse
+namespace QwikThrift.Pages.Category
 {
     public class ListModel : PageModel
     {
-        private readonly QwikThrift.Models.DAL.QwikThriftDbContext _context;
+        private readonly QwikThriftDbContext _context;
 
-        public ListModel(QwikThrift.Models.DAL.QwikThriftDbContext context)
+        public ListModel(QwikThriftDbContext context)
         {
             _context = context;
         }
 
-        public IList<Category> Category { get;set; } = default!;
+        public IList<Models.DAL.Category> Category { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

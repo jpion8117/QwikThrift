@@ -7,19 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QwikThrift.Models.DAL;
 
-namespace QwikThrift.Pages.Browse
+namespace QwikThrift.Pages.Category
 {
     public class DeleteModel : PageModel
     {
-        private readonly QwikThrift.Models.DAL.QwikThriftDbContext _context;
+        private readonly QwikThriftDbContext _context;
 
-        public DeleteModel(QwikThrift.Models.DAL.QwikThriftDbContext context)
+        public DeleteModel(QwikThriftDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-      public Category Category { get; set; } = default!;
+        public Models.DAL.Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -34,7 +34,7 @@ namespace QwikThrift.Pages.Browse
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Category = category;
             }

@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QwikThrift.Models.DAL;
 
-namespace QwikThrift.Pages.Browse
+namespace QwikThrift.Pages.Category
 {
     public class EditModel : PageModel
     {
-        private readonly QwikThrift.Models.DAL.QwikThriftDbContext _context;
+        private readonly QwikThriftDbContext _context;
 
-        public EditModel(QwikThrift.Models.DAL.QwikThriftDbContext context)
+        public EditModel(QwikThriftDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
+        public Models.DAL.Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,13 +29,13 @@ namespace QwikThrift.Pages.Browse
                 return NotFound();
             }
 
-            var category =  await _context.Categories.FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
                 return NotFound();
             }
             Category = category;
-           ViewData["AuthorizedById"] = new SelectList(_context.Users, "UserId", "Email");
+            ViewData["AuthorizedById"] = new SelectList(_context.Users, "UserId", "Email");
             return Page();
         }
 
@@ -71,7 +71,7 @@ namespace QwikThrift.Pages.Browse
 
         private bool CategoryExists(int id)
         {
-          return (_context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
+            return (_context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
         }
     }
 }
