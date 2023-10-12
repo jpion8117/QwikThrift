@@ -26,7 +26,7 @@
             <input asp-for="Listing.ListingId" hidden/>
             <div class="form-group">
                 <label asp-for="Listing.Title" class="control-label"></label>
-                <input asp-for="Listing.Title" class="form-control" value="@Model.Listing.Title"/>
+                <input asp-for="Listing.Title" class="form-control" value="@Model.Listing.Title" required/>
                 <span asp-validation-for="Listing.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,15 +43,18 @@
             </div>
             <div class="form-group ">
                 <label asp-for="Listing.Description" class="control-label"></label>
-                <textarea asp-for="Listing.Description" class="form-control text-wrap" style="height:100px;"></textarea>
+                <textarea asp-for="Listing.Description" class="form-control text-wrap" style="height:100px;" required></textarea>
                 <span asp-validation-for="Listing.Description" class="text-danger"></span>
             </div>
             <div class=" text-center">
+                <div class="form-group">
+                    <input type="reset" value="Reset" class="nav-link btn btn-primary text-white mt-2 mx-auto" />
+                </div>
                 <div class="form-group mt-2 ">
-                    <button type="submit" class="btn btn-primary mt-2">Next Step</button>
+                    <button type="submit" class="btn btn-primary mt-2 nav-link mx-auto text-white">Next Step</button>
                 </div>
                 <div class=" mt-2">
-                    <a class="btn btn-primary mb-2 " asp-page="/MyListings/Index">
+                    <a class="btn btn-primary mb-2 nav-link mx-auto text-white" asp-page="/MyListings/Index">
                         Back to My Listings
                     </a>
                 </div>
@@ -62,6 +65,7 @@
 
 
 </div>
+
 
 
 @section Scripts {

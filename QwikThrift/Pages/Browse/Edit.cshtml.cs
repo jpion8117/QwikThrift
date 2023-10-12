@@ -66,7 +66,7 @@ namespace QwikThrift.Pages.Browse
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
 
         private bool CategoryExists(int id)
