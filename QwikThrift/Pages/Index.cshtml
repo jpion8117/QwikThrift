@@ -23,7 +23,7 @@
                                 var listing = Model.LastFiveListings[i]; // Get the current listing
 
                                 <div class=" carousel-item @(i == 0 ? "active" : "")">
-                                    <div class="row ps-5">
+                                    <div class="row ps-5 ms-5">
                                         <div class="form-group col-4 ps-3">
                                             <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
                                         </div>
