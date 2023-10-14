@@ -52,16 +52,16 @@ namespace QwikThrift.Pages.Users.AccountRecovery
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(List<UserSecurityQuestion> userSecurityQuestions)
         {
             if (!ModelState.IsValid || _context.SecurityQuestions == null)
             {
                 return Page();
             }
 
-            for (int index = 0; index < UserSecurityQuestions.Count; index++)
+            for (int index = 0; index < userSecurityQuestions.Count; index++)
             {
-                UserSecurityQuestion question = UserSecurityQuestions[index];
+                UserSecurityQuestion question = userSecurityQuestions[index];
                 bool error = false;
 
                 if (question.Question.IsNullOrEmpty())
@@ -69,11 +69,7 @@ namespace QwikThrift.Pages.Users.AccountRecovery
                     ModelState.AddModelError($"SecurityQuestions[{index}].Question", "Please select a security question");
                     error = true;
                 }
-                if (question.Answer.IsNullOrEmpty())
-                {
-                    ModelState.AddModelError($"SecurityQuestions[{index}].Answer", "Please answer the security question.");
-                    error = true;
-                }
+
                 if (error)
                     return Page();
 
@@ -82,7 +78,7 @@ namespace QwikThrift.Pages.Users.AccountRecovery
 
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPagePermanent("/Index");
         }
     }
 }
