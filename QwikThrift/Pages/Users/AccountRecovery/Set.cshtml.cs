@@ -18,7 +18,7 @@ namespace QwikThrift.Pages.Users.AccountRecovery
         private readonly QwikThrift.Models.DAL.QwikThriftDbContext _context;
 
         [BindProperty]
-        public List<UserSecurityQuestion> UserSecurityQuestions { get; } = new List<UserSecurityQuestion> { 
+        public List<UserSecurityQuestion> UserSecurityQuestions { get; private set; } = new List<UserSecurityQuestion> { 
             new UserSecurityQuestion(),
             new UserSecurityQuestion(),
             new UserSecurityQuestion()
@@ -59,6 +59,19 @@ namespace QwikThrift.Pages.Users.AccountRecovery
                 return Page();
             }
 
+            var userMan = new UserManager(HttpContext.Session, _context);
+
+            var user = userMan.User ?? throw new ArgumentNullException("User null when after login check.");
+
+            var existingQuestions = _context.SecurityQuestions.Where(sq => sq.UserId == user.UserId).ToList();
+
+            foreach (var question in existingQuestions)
+            {
+                _context.Remove(question);
+            }
+
+            await _context.SaveChangesAsync();
+          
             for (int index = 0; index < userSecurityQuestions.Count; index++)
             {
                 UserSecurityQuestion question = userSecurityQuestions[index];
