@@ -78,7 +78,7 @@ namespace QwikThrift.Pages.MyListings
             {
                 Listing = listing;
                 _context.Listings.Remove(Listing);
-                NotificationBanner.SetBanner("Listing deleted successfully!", "bg-success text-white text-center");
+                NotificationBanner.SetBanner(HttpContext.Session, "Listing deleted successfully!", "bg-success text-white text-center");
                 await _context.SaveChangesAsync();
             }
 
