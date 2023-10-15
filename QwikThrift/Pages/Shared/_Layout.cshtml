@@ -14,10 +14,10 @@
 </head>
 <body>
     <header>
-        @if (NotificationBanner.BannerVisible)
+        @if (NotificationBanner.CheckForBanner(Context.Session))
         {
-            <div id="NotificationBanner" class="w-100 @NotificationBanner.Classes" style="@NotificationBanner.Style">
-                @NotificationBanner.Content
+            <div id="NotificationBanner" class="w-100 @(Context.Session.GetString("Classes"))" style="@(Context.Session.GetString("Styles"))">
+                @(Context.Session.GetString("Content"))
             </div>
         }
         <nav class="navbar nav-qwik navbar-brand navbar-expand-md navbar navbar-toggleable-md navbar-light navbar-text mb-3">

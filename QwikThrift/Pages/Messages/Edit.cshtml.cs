@@ -64,7 +64,7 @@ namespace QwikThrift.Pages.Messages
             _dbContext.Messages.Update(Message);
             _dbContext.SaveChanges();
 
-            NotificationBanner.SetBanner("Message edited successfully!", "bg-success text-white text-center");
+            NotificationBanner.SetBanner(HttpContext.Session,"Message edited successfully!", "bg-success text-white text-center");
 
             if (ReturnUrl.IsNullOrEmpty())
                 return RedirectToPagePermanent("/Index");

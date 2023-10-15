@@ -157,7 +157,7 @@ namespace QwikThrift.Pages.MyListings
 
             var mode = Mode == PageMode.Create ? "posted" : "edited"; 
 
-            NotificationBanner.SetBanner($"Your listing titled \"{listing.Title}\" has been {mode} successfully!",
+            NotificationBanner.SetBanner(HttpContext.Session, $"Your listing titled \"{listing.Title}\" has been {mode} successfully!",
                 "bg-success text-center text-white");
 
             return RedirectToPagePermanent("/MyListings/Index");

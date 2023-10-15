@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QwikThrift.Models.DAL
@@ -27,9 +28,11 @@ namespace QwikThrift.Models.DAL
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
+        [Required(ErrorMessage = "Please select a security question.")]
         public string Question { get; set; }
 
         [NotMapped]
+        [Required(ErrorMessage = "Please answer the security question.")]
         public string Answer
         {
             get => _answer;

@@ -3,46 +3,37 @@
     public static class NotificationBanner
     {
         private static bool _bannerVisible;
+        private static int _nextSessionKey = 1;
 
-        /// <summary>
-        /// Content displayed in banner
-        /// </summary>
-        public static string Content { get; set; } = "";
-
-        /// <summary>
-        /// Classes to apply to banner
-        /// </summary>
-        public static string Classes { get; set; } = "";
-
-        /// <summary>
-        /// Custom CSS inline-styles to apply
-        /// </summary>
-        public static string Style { get; set; } = "";
-
-        /// <summary>
-        /// Self-resets to false when read.
-        /// </summary>
-        public static bool BannerVisible
-        { 
+        private static int NextSessionKey
+        {
             get
             {
-                var currentState = _bannerVisible;
-
-                _bannerVisible = false;
-
-                return currentState;
+                var key = _nextSessionKey;
+                _nextSessionKey++;
+                return key;
             }
-
-            set => _bannerVisible = value; 
         }
 
+        public static Dictionary<int, ISession> Sessions { get; set; } = new Dictionary<int, ISession>();
 
-        public static void SetBanner(string content, string classes = "", string style = "")
+        public static void SetBanner(ISession session, string content, string classes = "", string style = "")
         {
-            BannerVisible = true;
-            Content = content;
-            Classes = classes;
-            Style = style;
+            var key = NextSessionKey;
+            Sessions[key] = session;
+            session.SetString("DisplayBanner", "true");
+            session.SetString("Content", content);
+            session.SetString("Classes", classes);
+            session.SetString("Style", style);
+        }
+
+        public static bool CheckForBanner(ISession session)
+        {
+            if (session.GetString("DisplayBanner") == null) return false;
+
+            session.Remove("DisplayBanner");
+
+            return true;
         }
     }
 }
