@@ -6,7 +6,7 @@
 
 <h1>Details:</h1>
 
-<div class="row ">
+<div class="row text-white">
     <div class="col-md-8 data-view">
         <form method="post">
             @Html.AntiForgeryToken()
@@ -26,10 +26,7 @@
     </div>
 
     <div class="col-md-4 text-center">
-        <a class="btn btn-primary text-white" asp-page="/Browse/Browse">
-            Go back to browse listings
-        </a>
-        <a class="btn btn-primary text-white" asp-page="/Browse/List">
+        <a class="btn btn-primary text-white" asp-page="/Category/Index">
             Go back to list
         </a>
     </div>

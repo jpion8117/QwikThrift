@@ -7,10 +7,10 @@
 
 <h1>Edit</h1>
 
-<h4>Category</h4>
-<hr />
+<h4 class="text-white">Category</h4>
+<hr class="text-white" />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 text-white">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Category.CategoryId" />
@@ -37,7 +37,7 @@
 </div>
 
 <div class="btn btn-primary">
-    <a class="text-white" asp-page="./List">Back to List</a>
+    <a class="text-white" asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
