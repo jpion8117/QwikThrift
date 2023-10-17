@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,11 +11,11 @@ using QwikThrift.Models.DAL;
 
 namespace QwikThrift.Pages.Category
 {
-    public class DeleteModel : PageModel
+    public class ForceDeleteModel : PageModel
     {
         private readonly QwikThriftDbContext _context;
 
-        public DeleteModel(QwikThriftDbContext context)
+        public ForceDeleteModel(QwikThriftDbContext context)
         {
             _context = context;
         }
@@ -33,15 +33,14 @@ namespace QwikThrift.Pages.Category
             }
 
             var user = userMan.User ?? throw new ArgumentNullException();
-
-            if (!user.CheckRole(UserRoles.Administrator))
+            if (!user.CheckRole(UserRoles.Administrator)) 
             {
                 NotificationBanner.SetBanner(HttpContext.Session,
                     "Only administrators may delete categories. If you believe this category violates our " +
-                    "site's rules, please contact the administrator through the message center.",
+                    "site's rules, please contact the administrator through the message center.", 
                     "bg-danger text-center text-light",
                     10000);
-                return RedirectToPage("/AccessDenied");
+                return RedirectToPage("/AccessDenied"); 
             }
 
             if (id == null || _context.Categories == null)
@@ -72,14 +71,31 @@ namespace QwikThrift.Pages.Category
 
             if (category != null)
             {
-                if (category.Listings.Count > 0)
+                foreach (var listing in category.Listings)
                 {
-                    NotificationBanner.SetBanner(HttpContext.Session,
-                        "Cannot delete non-empty category! Please use Force Delete to delete the category and all " +
-                        "associated listings.",
-                        "bg-danger text-center text-light",
-                        10000);
-                    return RedirectToPage("./ForceDelete", new { id = category.CategoryId });
+                    listing.DeleteAssociatedImages();
+                    
+                    foreach(var image in  listing.Images) 
+                    {
+                        _context.ImageReferences.Remove(image);
+                    }
+
+                    var message = new QwikThrift.Models.DAL.Message
+                    {
+                        SenderId = 1, //administrator
+                        RecipientId = listing.OwnerId,
+                        Timestamp = DateTime.Now,
+                        Subject = $"The category containing your listing \"{listing.Title}\" has been deleted.",
+                        Body = $"This is an automated message:\n\n" +
+                        $"An administrator has deleted the category \"{category.CategoryName}.\" This " +
+                        $"usually happens when a category voiolates our site's rules. Your listing, \"{listing.Title},\" " +
+                        $"has been deleted as well. If you believe your listing did not violate any rules, you may repost " +
+                        $"it under another related category.\n\nThank you for your cooperation,\n\nQwikThrift Admin Team"
+                    };
+
+                    _context.Messages.Add(message);
+
+                    _context.Listings.Remove(listing);
                 }
 
                 Category = category;

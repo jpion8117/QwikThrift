@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QwikThrift.Models;
 using QwikThrift.Models.DAL;
 
 namespace QwikThrift.Pages.Category
@@ -22,10 +24,17 @@ namespace QwikThrift.Pages.Category
         [BindProperty]
         public Models.DAL.Category Category { get; set; } = default!;
 
-        public SelectList SelectListItems { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var userMan = new UserManager(HttpContext.Session, _context);
+
+            if (!userMan.UserLoggedIn)
+            {
+                return RedirectToPagePermanent("/Users/Login", new { returnUrl = Request.GetEncodedUrl() });
+            }
+
+            var user = userMan.User ?? throw new ArgumentNullException();
+
             if (id == null || _context.Categories == null)
             {
                 return NotFound();
@@ -36,8 +45,20 @@ namespace QwikThrift.Pages.Category
             {
                 return NotFound();
             }
+
+            //only allow original author or an administrator to edit
+            if (!user.CheckRole(UserRoles.Administrator) && category.AuthorizedById != user.UserId)
+            {
+                NotificationBanner.SetBanner(HttpContext.Session,
+                    "You do not have permission to edit this category. Please contact the original lister or an admin if you " +
+                    "have any concerns.",
+                    "bg-danger text-center text-light",
+                    10000);
+                return RedirectToPage("/AccessDenied");
+            }
+
             Category = category;
-            SelectListItems = new SelectList(_context.Users, "UserId", "Email");
+            ViewData["AuthorizedById"] = category.AuthorizedById;
             return Page();
         }
 

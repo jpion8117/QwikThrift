@@ -35,9 +35,10 @@
                 @Html.DisplayFor(modelItem => item.CategoryDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AuthorizedBy.Email)
+                @Html.DisplayFor(modelItem => item.AuthorizedBy.Username)
             </td>
             <td>
+                <a class="text-white" asp-page="/Browse/Index" asp-route-ItemCategory="@item.CategoryName">View Listings (@item.Listings.Count())</a> |
                 <a class="text-white" asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
                 <a class="text-white" asp-page="./CategoryDetails" asp-route-id="@item.CategoryId">Details</a> |
                 <a class="text-white" asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>

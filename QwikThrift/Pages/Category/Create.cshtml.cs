@@ -35,7 +35,7 @@ namespace QwikThrift.Pages.Category
 
             var userId = userMan.User.UserId;
 
-            ViewData["AuthorizedById"] = new SelectList(_context.Users, "UserId", "Email");
+            Category = new Models.DAL.Category { AuthorizedById = userId };
             return Page();
         }
 

@@ -23,10 +23,7 @@
                 <input asp-for="Category.CategoryDescription" class="form-control" />
                 <span asp-validation-for="Category.CategoryDescription" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Category.AuthorizedById" class="control-label"></label>
-                <select asp-for="Category.AuthorizedById" class ="form-control" asp-items="ViewBag.AuthorizedById"></select>
-            </div>
+            <input class="form-control" asp-for="Category.AuthorizedById" hidden />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

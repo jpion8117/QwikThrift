@@ -14,8 +14,14 @@
         <a asp-page="Index" asp-route-mode="outbox" class="list-group-item list-group-item-action
             @(ViewBag.Mode == "outbox" ? "active" : "")">Sent</a>
         <a asp-page="Send" asp-route-returnUrl="@(ctxAccess.HttpContext != null ? ctxAccess.HttpContext.Request.Path : "")"
-            class="list-group-item list-group-item-action list-group-item-primary">
-                Compose Message
+           class="list-group-item list-group-item-action list-group-item-primary">
+            Compose Message
+        </a>
+        <a asp-page="Send" asp-route-returnUrl="@(ctxAccess.HttpContext != null ? ctxAccess.HttpContext.Request.Path : "")"
+           asp-route-recipient="admin"
+           asp-route-body="Please describe your issue here and use an appropriate subject to help our admin team better assist in resolving your problem. Thank you!"
+           class="list-group-item list-group-item-action list-group-item-info">
+            Message Admin
         </a>
     </div>
     @RenderBody()
