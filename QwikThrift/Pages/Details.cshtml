@@ -63,5 +63,10 @@
         <a class="btn btn-primary" asp-page="@Model.ReturnPage">
             @Model.ReturnBtnLabel
         </a>
+        <a class="btn btn-primary text-white my-1" asp-page="/Messages/Send" asp-route-subject="@Model.Item.Title"
+           asp-route-recipient="@Model.Item.Owner.Username" asp-route-body="Is ThIs ItEm StIlL AvAiLaBlE!!!"
+           asp-route-returnURL="@ViewContext.HttpContext.Request.Path">
+            Message Seller
+        </a>
     </div>
 </div>
