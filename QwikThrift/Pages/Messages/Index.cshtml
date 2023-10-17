@@ -3,14 +3,6 @@
 @{
     Layout = "_MessageLayout";
 }
-@section AppendToHead
-{
-    <style>
-        .remove-btn-hover:hover{
-            color: red;
-        }
-    </style>
-}
 <div class="col-md-8">
     <div class="list-group d-flex flex-column align-items-stretch">
         @if (Model.Messages.Count == 0)
@@ -41,21 +33,24 @@
                         </button>
                     </form>
                 </div>
-                <div class="col-md-1 d-flex flex-column flex-fill">
-                    <form class="flex-fill d-flex" id="deleteBtnForm" asp-page-handler="SendToTrash" method="post">
+                <div class="my-1 col-md-1 d-flex flex-column flex-fill">
+                    <form class="flex-fill d-flex flex-grow-1" id="deleteBtnForm" asp-page-handler="SendToTrash" method="post">
                         <input asp-for="MessageId" value="@message.MessageId" hidden />
                         <input asp-for="Mode" hidden />
                         <input asp-for="SortMode" hidden />
                         <input asp-for="SearchString" hidden />
-                        <button id="deleteBtn" type="submit" class="bg-danger flex-fill text-light text-center remove-btn-hover">
+                        <button id="deleteBtn" type="submit" class="bg-danger flex-fill text-black text-center msg-btn-hover">
                             <span class="fa-solid fa-trash"></span>
                         </button>
                     </form>
-                    <a asp-page="/Messages/Edit" asp-route-messageId="@message.MessageId" class="text-center flex-fill text-light bg-info @(Model.Mode == "outbox" ? "" : "visually-hidden" )">
-                        <p class="my-auto">
-                            <span class="fa-solid fa-file-pen text-center"></span>
-                        </p>
-                    </a>
+                    <form asp-page="/Messages/Edit" class="flex-fill d-flex @(Model.Mode == "outbox" ? "" : "visually-hidden" )" method="get">
+                        <input asp-for="MessageId" value="@message.MessageId" hidden />
+                        <button class="bg-info flex-fill text-black text-center msg-btn-hover">
+                            <div class=" my-auto" >
+                                <span class=" pt-2 fa-solid fa-file-pen text-center "></span>
+                            </div>
+                        </button>
+                    </form>
                 </div>
             </div>
         }

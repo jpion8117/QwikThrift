@@ -119,3 +119,9 @@ button.btn-primary:hover {
 a.btn-secondary {
     background-color: #0AC9BC;
 }
+.msg-btn-hover:hover {
+    border: 4px black solid;
+    border-left: 4px solid slateGray;
+    border-bottom: 4px slateGray solid;
+    color: darkslategray !important;
+}

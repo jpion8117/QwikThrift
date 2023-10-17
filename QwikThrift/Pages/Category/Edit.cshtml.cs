@@ -22,6 +22,8 @@ namespace QwikThrift.Pages.Category
         [BindProperty]
         public Models.DAL.Category Category { get; set; } = default!;
 
+        public SelectList SelectListItems { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -35,7 +37,7 @@ namespace QwikThrift.Pages.Category
                 return NotFound();
             }
             Category = category;
-            ViewData["AuthorizedById"] = new SelectList(_context.Users, "UserId", "Email");
+            SelectListItems = new SelectList(_context.Users, "UserId", "Email");
             return Page();
         }
 
@@ -66,7 +68,7 @@ namespace QwikThrift.Pages.Category
                 }
             }
 
-            return RedirectToPage("./List");
+            return RedirectToPage("./Index");
         }
 
         private bool CategoryExists(int id)

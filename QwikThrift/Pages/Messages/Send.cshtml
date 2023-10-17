@@ -28,3 +28,12 @@
     <input asp-for="SenderId" class="visually-hidden" />
     <input asp-for="ReturnUrl" class="visually-hidden" />
 </form>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $("#Message.Subject").focus();
+        });
+    </script>
+}
