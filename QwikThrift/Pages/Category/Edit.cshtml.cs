@@ -47,7 +47,7 @@ namespace QwikThrift.Pages.Category
             }
 
             //only allow original author or an administrator to edit
-            if (!user.CheckRole(UserRoles.Administrator) && category.AuthorizedById != user.UserId)
+            if (!user.CheckRole(UserRoles.Moderator) && category.AuthorizedById != user.UserId)
             {
                 NotificationBanner.SetBanner(HttpContext.Session,
                     "You do not have permission to edit this category. Please contact the original lister or an admin if you " +

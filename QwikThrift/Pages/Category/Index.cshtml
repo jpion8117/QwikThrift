@@ -19,9 +19,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Category[0].CategoryDescription)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].AuthorizedBy)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -33,9 +30,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuthorizedBy.Username)
             </td>
             <td>
                 <a class="text-white" asp-page="/Browse/Index" asp-route-ItemCategory="@item.CategoryName">View Listings (@item.Listings.Count())</a> |
