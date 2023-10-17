@@ -11,8 +11,35 @@
         <form method="post">
             @Html.AntiForgeryToken()
 
-            <div class="form-group m-1">
-                <img class="col-12" src="@(Model.Item.Images.Count > 0 ? Model.Item.Images[0].FullPath : "")" alt="Listing Image" />
+            <div id="listinImages" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @for (int i = 0; i < Model.Item.Images.Count; i++)
+                    {
+                        <li data-target="#listinImages" data-slide-to="@i" class="@(i==0 ? "active" : "")"></li>
+                    }
+                </ol>
+                <div class="carousel-inner">
+                    @for (int i = 0; i < Model.Item.Images.Count; i++)
+                    {
+                        <div class="carousel-item @(i==0 ? "active" : "")">
+                            <img class="d-block mx-auto" src="@Model.Item.Images[i].FullPath" alt="" style="height:350px">
+                        </div>
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#listinImages" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </a>
+                <a class="carousel-control-next" href="#listinImages" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="form-group m-1 ">
+                <label class="fw-bolder">Listed By:</label>
+                <span>
+                    @Model.Item.Owner.Username on
+                    @Model.Item.ListingTime.ToShortDateString()
+                </span>
             </div>
             <div class="form-group m-1">
                 <label class="fw-bolder">Price:</label>
@@ -35,11 +62,14 @@
     </div>
 
     <div class="col-md-4 text-center">
-        <a class="btn btn-primary text-white" asp-page="/Browse/Browse">
+        <a class="btn btn-primary text-white" asp-page="/Browse/Index">
             Go back to browse listings
         </a>
-        <a class="btn btn-primary text-white" asp-page="/Browse/List">
-            Go back to list
+        <a class="btn btn-primary text-white my-1" asp-page="/Messages/Send" asp-route-subject="@Model.Item.Title" 
+            asp-route-recipient="@Model.Item.Owner.Username" asp-route-body="Is ThIs ItEm StIlL AvAiLaBlE!!!"
+            asp-route-returnURL="@ViewContext.HttpContext.Request.Path"
+        >
+            Message Seller
         </a>
     </div>
 </div>

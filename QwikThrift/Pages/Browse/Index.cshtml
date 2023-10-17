@@ -13,43 +13,26 @@
         <div class="container-fluid">
             @if (Model.Listings != null && Model.Listings.Any())
             {
+                    <div class="d-flex flex-grow-1 align-content-center flex-wrap listing">
+
                 @foreach (var listing in Model.Listings)
-                {
-                    <div class="row listing">
-
-
-                        <div class="form-group col-4">
-                            <img class="col-12 rounded-3" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
-                        </div>
-
-
-                        <div class="col-6">
-
-                            <div class="form-group col-8">
-                                <label>Title:</label>
-                                <p>@listing.Title</p>
+                    {
+                        <a class=" btn btn-primary m-2 mx-auto" asp-page="/Browse/Details" asp-route-id="@listing.ListingId">
+                            <div class="form-group">
+                                <img class="col-12 rounded-3" height="200px" src="@(listing.Images.Count > 0 ? listing.Images[0].FullPath : "")" alt="Listing Image" />
                             </div>
 
-                            <div class="form-group col-4">
-                                <label>Price:</label>
-                                <p>@listing.Price.ToString("C")</p>
+                            <div class="">
+                                <p>
+                                    <span class="fw-bold">@listing.Title</span>
+                                    <br />
+                                    @listing.Price.ToString("C")
+                                </p>
+
                             </div>
-
-                            <div class="form-group col-8">
-                                <label>Category:</label>
-                                <p>@listing.Category.CategoryName</p>
-                            </div>
-                        </div>
-
-
-                        <div class="text-center" style="padding-top:15px;">
-                            <a class="btn btn-primary" asp-page="/Browse/Details" asp-route-id="@listing.ListingId">
-                                Details
-                            </a>
-                        </div>
-                    </div>
-                    <hr />
-                }
+                        </a>
+                    }
+                </div>
             }
             else
             {
@@ -79,10 +62,7 @@
             </p>
 
             <button class="btn btn-primary">
-                <a class="text-white" asp-area="" asp-page="/Messages/Send">Contact Seller</a>
-            </button>
-            <button class="btn btn-primary">
-                <a class="text-white" asp-area="" asp-page="/Browse/Create">Create a Category</a>
+                <a class="text-white" asp-area="" asp-page="/Category/Create">Create a Category</a>
             </button>
         </form>
     </div>

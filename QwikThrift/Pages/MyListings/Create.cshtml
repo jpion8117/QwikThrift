@@ -53,4 +53,14 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        $(document).ready(function () { 
+            $("#Listing_Title").focus();
+        });
+
+        $("#Listing_Price").on("focus", function () { 
+            $("#Listing_Price").val('');
+        });
+    </script>
 }
