@@ -10,6 +10,7 @@ using System.Reflection;
 
 namespace QwikThrift.Pages.MyListings
 {
+    [DisableRequestSizeLimit]
     public class AddImagesModel : PageModel
     {
         private QwikThriftDbContext _dbContext;
